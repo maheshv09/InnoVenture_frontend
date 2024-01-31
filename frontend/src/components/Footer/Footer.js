@@ -31,13 +31,19 @@ const Footer = () => {
           <h2>Follow Us</h2>
           <div className="social-icons">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
+              <i className="fab fa-facebook"> Facebook </i>
             </a>
+            <br />
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
+              <i className="fab fa-twitter"> Twitter</i>
             </a>
+            <br />
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
+              <i className="fab fa-linkedin"> LinkedIn</i>
+            </a>
+            <br />
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-instagram"> Instagram</i>
             </a>
           </div>
         </div>

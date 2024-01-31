@@ -5,10 +5,18 @@ const Navbar = () => {
     <div>
       <nav
         className="navbar navbar-expand-lg"
-        style={{ backgroundColor: "rgb(252, 223, 184)" }}
+        style={{
+          backgroundColor: "rgb(252, 223, 184)",
+          fontFamily: "lucida-sans",
+          fontSize: "large",
+        }}
       >
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <a
+            className="navbar-brand"
+            href="#"
+            style={{ fontSize: "x-large", fontFamily: "georgia" }}
+          >
             InnoVenture
           </a>
           <button
