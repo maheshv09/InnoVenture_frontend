@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import {useSignInWithEmailAndPassword , useSignInWithGoogle} from "react-firebase-hooks/auth"
+import {useAuthState, useSignInWithEmailAndPassword , useSignInWithGoogle} from "react-firebase-hooks/auth"
 import auth from "../../firebase_init";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +11,9 @@ import SignUp from "./SignUp";
 import {GoogleButton} from "react-google-button"
 
 const Login = () => {
+  const curruser=useAuthState(auth);
+  const [logintype, setLogType] = useState('');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Access the navigate function
@@ -24,22 +27,28 @@ const Login = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
   const handleGoogleLogin=async()=>{
      await signInWithGoogle();
-    navigate("/home");
-
+    
   }
 
 
   const handleLogin=async()=>{
     try{
     const newUser=await signInWithEmailAndPassword(email,password)
-    toast("hello bhaiya")
+    if(!newUser || logintype!=='investor'){
+     alert("Invalid User");
+     navigate("/signup");
+    }
+    else{
+   navigate("/");
+    }
+
     }
     catch(error){
       console.log("Error!!!!")
     }
     //validate and home
     // <Home/>
-    navigate("/home");
+    navigate("/");
   } 
  
 
@@ -71,7 +80,7 @@ const Login = () => {
         />
         <br />
         <label for="dropdownId">Login Type</label>
-    <select id="dropdownId" name="dropdownName">
+    <select id="dropdownId" name="dropdownName"  onChange={(e) => setLogType(e.target.value)}>
         <option value="startup">Startup Login</option>
         <option value="investor">Investor Login</option>
     </select><br/>
@@ -87,14 +96,7 @@ const Login = () => {
           <Link to="/signup"> daba tu</Link>
         </p>
       </div>
-      {/* <div className="ImageLink">
-        <Link to="/image_link" className="img-link">
-          <img
-            src="login_image.jpg"
-            
-          />
-        </Link>
-      </div> */}
+  
     </div>
   );
 };

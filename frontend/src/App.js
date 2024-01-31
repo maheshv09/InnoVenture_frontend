@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import "./App.css";
 import SignUp from "./components/Login/SignUp";
 import Login from "./components/Login/Login";
@@ -9,22 +9,38 @@ import Site1 from "./components/Site1/Site1";
 import Site2 from "./components/Site2/Site2";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import Protected_route from "./components/Protected_route";
+
+function Layout({ children }) {
+  return (
+    <>
+    <Protected_route>
+        <Navbar />
+
+        <Outlet/>   {/* Layout  */}
+        <Footer />
+  </Protected_route>
+      
+    </>
+  );
+}
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/invest" element={<Invest />} />
-          <Route path="/site1" element={<Site1 />} />
-          <Route path="/site2" element={<Site2 />} />
+          <Route element={<Layout />}>
+                  <Route path="/" element={ <Home/> } > </Route>
+                  <Route path="/home" element={<Home/>} />
+                  <Route path="/invest" element={ <Invest />} />
+                  <Route path="/site1" element={<Site1 />} />
+                  <Route path="/site2" element={<Site2 />} />
+                  <Route path="/explore" element={<Explore />} />       
+          </Route>
         </Routes>
-        <Footer />
       </BrowserRouter>
     </div>
   );

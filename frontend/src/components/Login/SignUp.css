@@ -88,7 +88,13 @@
   p a:hover {
     text-decoration: underline;
   }
-  
+  select {
+    /* Add your styles here */
+    padding: 5px;
+    margin-right: 10px;
+    background-color: #11cca9;
+    border-radius: 20px;
+}
   /* Right side image link
   .img-link {
     width: 50%;

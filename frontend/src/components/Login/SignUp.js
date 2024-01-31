@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth"
 import "./SignUp.css";
 import auth from "../../firebase_init";
+import axios from 'axios'   //used for get-post requests 
 
 const SignUp = ({}) => {
   const [name, setName] = useState('');
@@ -11,6 +12,9 @@ const SignUp = ({}) => {
   const [age, setAge] = useState('');
   const [pass, setPassword] = useState('');
   const [dob, setDOB] = useState('');
+  const [logintype, setLogType] = useState('');
+
+
   const navigate = useNavigate(); // Access the navigate function
   const [
     createUserWithEmailAndPassword,
@@ -19,11 +23,24 @@ const SignUp = ({}) => {
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
 
+
+
   const handleSignUp=async()=>{
+  
     console.log(auth);
+    
     try{
     const newUser=await createUserWithEmailAndPassword(email,pass)
     console.log("User Created as",newUser)
+      const currUser= {
+        name:name,
+        age:age,
+        email:email,
+        dob:dob,
+        logintype:logintype
+      }
+      const {data}=axios.post('http://localhost:8000/postUser',currUser);
+      console.log("DATA RECIEVED :", data);
     }
     catch(error){
 console.log(error,"HEll")
@@ -59,7 +76,13 @@ console.log(error,"HEll")
       <label>Age</label>
       <input type="number" placeholder="Your Age" onChange={(e) => setAge(e.target.value)} /><br />
 
-      <button className="submitBut" type="submit" onClick={handleSignUp}>Sign Up</button>
+      <label for="dropdownId">Login Type</label>
+    <select id="dropdownId" name="dropdownName"  onChange={(e) => setLogType(e.target.value)}>
+        <option value="startup">Startup Login</option>
+        <option value="investor">Investor Login</option>
+    </select><br/>
+    <button className="submitBut" type="submit" onClick={handleSignUp}>Sign Up</button>
+
       </div>
   </div>
   );
