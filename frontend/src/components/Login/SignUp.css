@@ -2,7 +2,7 @@
 .SignUp {
     display: flex;
     justify-content: center; 
-    background-image: url("D:\WTL\FrontEnd\InnoVenture_frontend\frontend\src\components\Images\login_image.jpg");
+    background-image: url("../Images/login_image.jpg");
     align-items: center;
     height: 100vh;
     /* background: linear-gradient(to right, #11cca9, #3498db); Updated gradient color schema */

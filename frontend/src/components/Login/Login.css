@@ -2,7 +2,7 @@
 
 .Login {
     display: flex;
-    background-image: url("D:\WTL\FrontEnd\InnoVenture_frontend\frontend\src\components\Images\login_image.jpg");
+    background-image: url("../Images/login_image.jpg");
     justify-content: center; 
     align-items: center;
     height: 100vh;
