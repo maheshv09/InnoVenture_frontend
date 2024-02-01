@@ -9,7 +9,7 @@ const SignUp = ({}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
-  const [age, setAge] = useState('');
+  const [mobileNum, setMobileNum] = useState('');
   const [pass, setPassword] = useState('');
   const [dob, setDOB] = useState('');
   const [logintype, setLogType] = useState('');
@@ -33,8 +33,8 @@ const SignUp = ({}) => {
     const newUser=await createUserWithEmailAndPassword(email,pass)
     console.log("User Created as",newUser)
       const currUser= {
+        mobileNum:mobileNum,
         name:name,
-        age:age,
         email:email,
         dob:dob,
         logintype:logintype
@@ -48,6 +48,37 @@ console.log(error,"HEll")
     //validate and home
     if(!(email.includes('@')))
         alert("Invalid Email")
+    if(typeof mobileNum != "number" && mobileNum>=0 && mobileNum.length()==10 )
+        alert("Invalid mobileNum")
+    if((dob.charAt(2) == '/'&&dob.charAt(5)== '/' && dob.length()===10)){
+      const splitDob=dob.split('/');
+      const day=splitDob[0];
+      const month=splitDob[1];
+      const year=splitDob[2];
+      if(typeof month =='number'&& typeof day =='number'&& typeof year =='number' && month<=12 ){
+        //leap year
+        if(year%4==0 && year%100!=0 ){
+            if((month==2 && day>29))
+              alert('Invalid date for feb month')
+            else if( month%2==1 && day>31)
+              alert('Invalid date')
+            else if(month%2==0 && day>30)
+              alert('Invalid date')
+            else
+              alert("All good")
+
+        }
+        else{// not leap
+           if((month==2 && day>28))
+              alert('Invalid date for feb month')
+            else if( month%2==1 && day>31)
+              alert('Invalid date')
+            else if(month%2==0 && day>30)
+              alert('Invalid date')
+        }
+      }
+    }
+    
     
     navigate("/home");
   } 
@@ -72,9 +103,9 @@ console.log(error,"HEll")
             
       </div> */}
       <label>BirthDate</label>
-         <input type="date" name="birthDate"  onChange={(e) => setDOB(e.target.value)}/>   
+         <input type="text" name="birthDate"  onChange={(e) => setDOB(e.target.value)}/>   
       <label>Age</label>
-      <input type="number" placeholder="Your Age" onChange={(e) => setAge(e.target.value)} /><br />
+      <input type="text" placeholder="Your Mobile Number" onChange={(e) => setMobileNum(e.target.value)} /><br />
 
       <label for="dropdownId">Login Type</label>
     <select id="dropdownId" name="dropdownName"  onChange={(e) => setLogType(e.target.value)}>
