@@ -86,8 +86,8 @@ console.log(error,"HEll")
   return (
     <div className="SignUp">
 
-      <div className="SignUpBox">
-      <h2>Sign Up</h2>
+      <div className="SignUpBox"  style={ { width: '50%',padding: '20px'}}>
+      <h2 style={{  textAlign: 'center',color: '#333333'}}>Sign Up</h2>
       <label>Email</label>
       <input type="text" placeholder="abc@gmail.com" onChange={(e) => setEmail(e.target.value)} /><br />
 
