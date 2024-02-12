@@ -5,14 +5,6 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-content">
-        {/* <div className="footer-section about">
-          <h2>About InnoVenture</h2>
-          <p>
-            InnoVenture is a platform connecting investors with emerging
-            startups.
-          </p>
-        </div> */}
-
         <div className="footer-section contact">
           <h2>Contact Us</h2>
           <p>Mobile: +91 9876543210</p>
@@ -31,19 +23,19 @@ const Footer = () => {
           <h2>Follow Us</h2>
           <div className="social-icons">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"> Facebook </i>
+              <i className="fab fa-facebook"></i>
             </a>
             <br />
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"> Twitter</i>
+              <i className="fab fa-twitter"></i>
             </a>
             <br />
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-linkedin"> LinkedIn</i>
+              <i className="fab fa-linkedin"></i>
             </a>
             <br />
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"> Instagram</i>
+              <i className="fab fa-instagram"></i>
             </a>
           </div>
         </div>
