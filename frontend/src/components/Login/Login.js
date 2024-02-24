@@ -48,7 +48,6 @@ const Login = () => {
     }
     //validate and home
     // <Home/>
-    navigate("/");
   };
 
   useEffect(() => {
