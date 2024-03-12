@@ -21,57 +21,56 @@ const SignUp = ({}) => {
   const handleSignUp = async () => {
     console.log(auth);
     //validate and home
-    if (!email.includes("@")) alert("Invalid Email");
-    else if (
-      typeof mobileNum != "number" &&
-      mobileNum >= 0 &&
-      mobileNum.length() == 10
-    )
-      alert("Invalid mobileNum");
-    else if (
-      dob.charAt(2) == "/" &&
-      dob.charAt(5) == "/" &&
-      dob.length() === 10
-    ) {
-      const splitDob = dob.split("/");
-      const day = splitDob[0];
-      const month = splitDob[1];
-      const year = splitDob[2];
-      if (
-        typeof month == "number" &&
-        typeof day == "number" &&
-        typeof year == "number" &&
-        month <= 12
-      ) {
-        //leap year
-        if (year % 4 == 0 && year % 100 != 0) {
-          if (month == 2 && day > 29) alert("Invalid date for feb month");
-          else if (month % 2 == 1 && day > 31) alert("Invalid date");
-          else if (month % 2 == 0 && day > 30) alert("Invalid date");
-          else alert("All good");
-        } else {
-          // not leap
-          if (month == 2 && day > 28) alert("Invalid date for feb month");
-          else if (month % 2 == 1 && day > 31) alert("Invalid date");
-          else if (month % 2 == 0 && day > 30) alert("Invalid date");
-        }
-      }
-    } else {
-      try {
-        const newUser = await createUserWithEmailAndPassword(email, pass);
-        console.log("User Created as", newUser);
-        const currUser = {
-          mobileNum: mobileNum,
-          name: name,
-          email: email,
-          dob: dob,
-          logintype: logintype,
-        };
-        const { data } = axios.post("http://localhost:8000/postUser", currUser);
-        console.log("DATA RECIEVED :", data);
-      } catch (error) {
-        console.log(error, "HEll");
-      }
+    // if (!email.includes("@")) alert("Invalid Email");
+    // else if (
+    //   typeof mobileNum != "number" &&
+    //   mobileNum >= 0 &&
+    //   mobileNum.length == 10
+    // )
+    //   alert("Invalid mobileNum");
+    // else if (
+    //   dob.charAt(2) == "/" &&
+    //   dob.charAt(5) == "/" &&
+    //   dob.length() === 10
+    // ) {
+    //   const splitDob = dob.split("/");
+    //   const day = splitDob[0];
+    //   const month = splitDob[1];
+    //   const year = splitDob[2];
+    //   if (
+    //     typeof month == "number" &&
+    //     typeof day == "number" &&
+    //     typeof year == "number" &&
+    //     month <= 12
+    //   ) {
+    //     //leap year
+    //     if (year % 4 == 0 && year % 100 != 0) {
+    //       if (month == 2 && day > 29) alert("Invalid date for feb month");
+    //       else if (month % 2 == 1 && day > 31) alert("Invalid date");
+    //       else if (month % 2 == 0 && day > 30) alert("Invalid date");
+    //       else alert("All good");
+    //     } else {
+    //       // not leap
+    //       if (month == 2 && day > 28) alert("Invalid date for feb month");
+    //       else if (month % 2 == 1 && day > 31) alert("Invalid date");
+    //       else if (month % 2 == 0 && day > 30) alert("Invalid date");
+    //     }
+    //   }
+    // } else {
+    try {
+      const newUser = await createUserWithEmailAndPassword(email, pass);
+      console.log("User Created as", newUser);
+      const currUser = {
+        mobileNum: mobileNum,
+        name: name,
+        email: email,
+        dob: dob,
+        logintype: logintype,
+      };
+      const { data } = axios.post("http://localhost:8000/postUser", currUser);
+      console.log("DATA RECIEVED :", data);
+    } catch (error) {
+      console.log(error, "HEll");
     }
 
     navigate("/home");

@@ -38,7 +38,7 @@ const Login = () => {
         const newUser = await signInWithEmailAndPassword(email, password);
         if (!newUser || logintype !== "investor") {
           alert("Invalid User");
-          navigate("/signup");
+          navigate("/startup");
         } else {
           navigate("/");
         }

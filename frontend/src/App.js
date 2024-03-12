@@ -10,17 +10,16 @@ import Site2 from "./components/Site2/Site2";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Protected_route from "./components/Protected_route";
-
+import Startup from "./components/Startup/Startup";
+import StartupInfo from "./components/StartupInfo/StartupInfo";
 function Layout({ children }) {
   return (
     <>
-    <Protected_route>
+      <Protected_route>
         <Navbar />
-
-        <Outlet/>   {/* Layout  */}
+        <Outlet /> {/* Layout  */}
         <Footer />
-  </Protected_route>
-      
+      </Protected_route>
     </>
   );
 }
@@ -33,12 +32,16 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
-                  <Route path="/" element={ <Home/> } > </Route>
-                  <Route path="/home" element={<Home/>} />
-                  <Route path="/invest" element={ <Invest />} />
-                  <Route path="/site1" element={<Site1 />} />
-                  <Route path="/site2" element={<Site2 />} />
-                  <Route path="/explore" element={<Explore />} />       
+            <Route path="/" element={<Home />}>
+              {" "}
+            </Route>
+            <Route path="/home" element={<Home />} />
+            <Route path="/startup" element={<Startup />} />
+            <Route path="/invest" element={<Invest />} />
+            <Route path="/site1" element={<Site1 />} />
+            <Route path="/site2" element={<Site2 />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/startup/:email" element={<StartupInfo />} />
           </Route>
         </Routes>
       </BrowserRouter>

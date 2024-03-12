@@ -2,19 +2,15 @@ import { signOut } from "firebase/auth";
 import React from "react";
 import auth from "../../firebase_init";
 import { Navigate, useNavigate } from "react-router-dom";
-
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const handleLogOut=async()=>{
-
+  const handleLogOut = async () => {
     await signOut(auth);
-    navigate('/');
+    navigate("/");
     // alert("Logged out!!")
-
-
-  }
+  };
   return (
     <div>
       <nav
@@ -47,28 +43,27 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="./home"
-                >
+                <Link to="/home" className="nav-link">
                   Home
-                </a>
+                </Link>{" "}
+                {/* Use Link component */}
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="./explore">
+                <Link to="/explore" className="nav-link">
                   Explore
-                </a>
+                </Link>{" "}
+                {/* Use Link component */}
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="./invest">
+                <Link to="/invest" className="nav-link">
                   Invest
-                </a>
+                </Link>{" "}
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="./aboutUs">
+                <Link to="/aboutUs" className="nav-link">
                   About Us
-                </a>
+                </Link>{" "}
+                {/* Use Link component */}
               </li>
 
               {/* <li className="nav-item dropdown">
@@ -103,8 +98,11 @@ const Navbar = () => {
           </div>
         </div>
         <form className="d-flex" role="search">
-         
-          <button className="btn btn-outline-success" type="submit" onClick={handleLogOut}>
+          <button
+            className="btn btn-outline-success"
+            type="submit"
+            onClick={handleLogOut}
+          >
             Log Out
           </button>
         </form>

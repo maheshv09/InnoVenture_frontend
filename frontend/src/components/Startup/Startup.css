@@ -1,0 +1,48 @@
+.startup-details {
+  display: flex;
+  align-items: flex-start; /* Align items to the start of the flex container */
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.image-container {
+  margin-right: 40px; /* Increase margin to allocate more space for the image */
+}
+
+.startup-image {
+  max-width: 100%; /* Ensure image fills container width */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px;
+}
+
+.details-container {
+  flex: 1; /* Allow details container to grow and take up remaining space */
+}
+
+.startup-name {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.detail-item {
+  margin-bottom: 20px;
+}
+
+.detail-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.detail-text {
+  margin: 0;
+}
+
+.detail-data {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+}
