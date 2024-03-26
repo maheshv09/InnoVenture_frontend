@@ -12,12 +12,18 @@ import Footer from "./components/Footer/Footer";
 import Protected_route from "./components/Protected_route";
 import Startup from "./components/Startup/Startup";
 import StartupInfo from "./components/StartupInfo/StartupInfo";
+import Marketplace from "./components/Marketplace/Marketplace";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Layout({ children }) {
   return (
     <>
       <Protected_route>
         <Navbar />
+        <ToastContainer />
         <Outlet /> {/* Layout  */}
+
         <Footer />
       </Protected_route>
     </>
@@ -41,7 +47,8 @@ function App() {
             <Route path="/site1" element={<Site1 />} />
             <Route path="/site2" element={<Site2 />} />
             <Route path="/explore" element={<Explore />} />
-            <Route path="/startup/:email" element={<StartupInfo />} />
+            <Route path="/startup/:firebase_Id" element={<StartupInfo />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

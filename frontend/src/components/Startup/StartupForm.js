@@ -5,6 +5,8 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
     name: startup.name || "",
     description: startup.description || "",
     usp: startup.usp || "",
+    valuation: startup.valuation,
+    availableEquity: startup.availableEquity,
     photo: startup.photo || null,
     data: startup.data || null,
   });
@@ -109,6 +111,23 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
 
       <label>USP</label>
       <input name="usp" value={formData.usp} onChange={handleChange} required />
+      <br />
+
+      <label>Current Valuation</label>
+      <input
+        name="valuation"
+        value={formData.valuation}
+        onChange={handleChange}
+        required
+      />
+      <br />
+      <label>Current Available Equity</label>
+      <input
+        name="availableEquity"
+        value={formData.availableEquity}
+        onChange={handleChange}
+        required
+      />
       <br />
 
       <label>Photo</label>

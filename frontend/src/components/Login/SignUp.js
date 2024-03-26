@@ -73,7 +73,7 @@ const SignUp = ({}) => {
       console.log(error, "HEll");
     }
 
-    navigate("/home");
+    navigate("/login");
   };
 
   return (

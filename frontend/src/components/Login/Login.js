@@ -14,9 +14,11 @@ import "./Login.css";
 import SignUp from "./SignUp";
 import { GoogleButton } from "react-google-button";
 import loginImage from "../Images/login_image.jpg"; // Adjust the path as necessary
+import axios from "axios";
 
 const Login = () => {
   const curruser = useAuthState(auth);
+  const id=curruser[0]?.uid
   const [logintype, setLogType] = useState("");
 
   const [email, setEmail] = useState("");
@@ -35,11 +37,17 @@ const Login = () => {
     try {
       if (!email.includes("@")) alert("Invalid Email");
       else {
-        const newUser = await signInWithEmailAndPassword(email, password);
-        if (!newUser || logintype !== "investor") {
-          alert("Invalid User");
-          navigate("/startup");
-        } else {
+
+          const response= await axios.get(`http://localhost:8000/checkLoginType/${email}`)
+          const status =response.data.success;
+
+         
+        
+        if(status && logintype!=='investor'){
+          await signInWithEmailAndPassword(email, password);
+         navigate("/startup");
+        } else if(!status && logintype==='investor'){
+          await signInWithEmailAndPassword(email, password);
           navigate("/");
         }
       }
