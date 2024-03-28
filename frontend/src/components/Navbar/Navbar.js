@@ -1,10 +1,15 @@
 import { signOut } from "firebase/auth";
 import React from "react";
 import auth from "../../firebase_init";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import './Navbar.css'
+import logo from "../Images/logo.png"
+
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   const handleLogOut = async () => {
     await signOut(auth);
@@ -12,102 +17,46 @@ const Navbar = () => {
     // alert("Logged out!!")
   };
   return (
-    <div>
-      <nav
-        className="navbar navbar-expand-lg"
-        style={{
-          backgroundColor: "rgb(252, 223, 184)",
-          fontFamily: "lucida-sans",
-          fontSize: "large",
-        }}
-      >
-        <div className="container-fluid">
-          <a
-            className="navbar-brand"
-            href="#"
-            style={{ fontSize: "x-large", fontFamily: "georgia" }}
-          >
-            InnoVenture
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
+    <>
+      <nav class="navbar navbar-expand-md navbar-light fixed-top shadow">
+        <div class="container">
+          <Link class="navbar-brand d-xs-block py-3" to="#">
+            <img src={`${logo}`} height="40" alt="Company Logo" />
+          </Link>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/home" className="nav-link">
-                  Home
-                </Link>{" "}
-                {/* Use Link component */}
-              </li>
-              <li className="nav-item">
-                <Link to="/explore" className="nav-link">
-                  Explore
-                </Link>{" "}
-                {/* Use Link component */}
-              </li>
-              <li className="nav-item">
-                <Link to="/invest" className="nav-link">
-                  Invest
-                </Link>{" "}
-              </li>
-              <li className="nav-item">
-                <Link to="/aboutUs" className="nav-link">
-                  About Us
-                </Link>{" "}
-                {/* Use Link component */}
-              </li>
 
-              {/* <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown link
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li> */}
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto">
+
+              {
+                location.pathname !== '/startup' ?
+                  <>
+                    <li class="nav-item">
+                      <Link class="nav-link active" aria-current="page" to="/home">Home</Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link class="nav-link" to="/explore">Explore Startups</Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link class="nav-link mx-2" to="/invest">MarketPlace</Link>
+                    </li>
+                  </>
+                  :
+                  ""
+              }
+            </ul>
+            <ul class="navbar-nav">
+              <li class="nav-item logout">
+                <button class="mx-2  btn " onClick={handleLogOut}>Log Out</button>
+              </li>
             </ul>
           </div>
         </div>
-        <form className="d-flex" role="search">
-          <button
-            className="btn btn-outline-success"
-            type="submit"
-            onClick={handleLogOut}
-          >
-            Log Out
-          </button>
-        </form>
       </nav>
-    </div>
+
+    </>
   );
 };
 

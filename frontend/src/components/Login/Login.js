@@ -13,12 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import SignUp from "./SignUp";
 import { GoogleButton } from "react-google-button";
-import loginImage from "../Images/login_image.jpg"; // Adjust the path as necessary
+import loginImage from "../Images/logo.png"; // Adjust the path as necessary
+import loginVec from "../Images/login_vec.jpg"
 import axios from "axios";
 
 const Login = () => {
   const curruser = useAuthState(auth);
-  const id=curruser[0]?.uid
+  const id = curruser[0]?.uid
   const [logintype, setLogType] = useState("");
 
   const [email, setEmail] = useState("");
@@ -38,18 +39,22 @@ const Login = () => {
       if (!email.includes("@")) alert("Invalid Email");
       else {
 
-          const response= await axios.get(`http://localhost:8000/checkLoginType/${email}`)
-          const status =response.data.success;
+        const response = await axios.get(`http://localhost:8000/checkLoginType/${email}`);
+        console.log("logintype: ", logintype);
 
-         
-        
-        if(status && logintype!=='investor'){
+        const status = response.data.success;
+        console.log("status: ", status);
+
+
+
+        if (status && logintype !== 'investor') {
           await signInWithEmailAndPassword(email, password);
-         navigate("/startup");
-        } else if(!status && logintype==='investor'){
+          navigate("/startup");
+        } else if (!status && logintype === 'investor') {
           await signInWithEmailAndPassword(email, password);
           navigate("/");
         }
+
       }
     } catch (error) {
       console.log("Error!!!!");
@@ -63,97 +68,61 @@ const Login = () => {
   }, [email]);
 
   return (
-    <div
-      className="Login"
-      style={{
-        display: "flex",
-        backgroundImage: `url(${loginImage})`,
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div
-        className="LoginBox"
-        style={{
-          width: "50%",
-          padding: "20px",
-          background: "linear-gradient(to right, #3498db, #11cca9)",
-          borderRadius: "10px",
-        }}
-      >
-        <h2 style={{ textAlign: "center", color: "#333333" }}>Login</h2>
-        <label
-          style={{ display: "block", marginBottom: "5px", color: "#1d08d9" }}
-        >
-          Email
-        </label>
-        <input
-          style={{ width: "80%", padding: "10px", marginBottom: "15px" }}
-          type="email"
-          placeholder="abc@gmail.com"
-          id="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <label
-          style={{ display: "block", marginBottom: "5px", color: "#1d08d9" }}
-        >
-          Password
-        </label>
-        <input
-          type="password"
-          placeholder="Your Password"
-          id="pass"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <label
-          for="dropdownId"
-          style={{ display: "block", marginBottom: "5px", color: "#1d08d9" }}
-        >
-          Login Type
-        </label>
-        <select
-          id="dropdownId"
-          name="dropdownName"
-          onChange={(e) => setLogType(e.target.value)}
-        >
-          <option
-            value="startup"
-            style={{
-              textAlign: "center",
-              color: "gray",
-              display: "inline-block",
-            }}
-          >
-            Startup Login
-          </option>
-          <option value="investor">Investor Login</option>
-        </select>
-        <br />
-        <br />
-        <button
-          className="submitBut"
-          type="submit"
-          onClick={handleLogin}
-          style={{ background: "#5eaef4", color: "#fff", padding: "10px 20px" }}
-        >
-          Login
-        </button>
-        <br></br>
-        <div className="googleBut">
-          <GoogleButton
-            className="g-btn"
-            type="light"
-            onClick={handleGoogleLogin}
-          />
+    <>
+      <div class="container my-auto mx-auto login-signup">
+        <div class="card card0">
+          <div class="d-flex flex-lg-row flex-column-reverse">
+            <div class="card card1 shadow">
+              <div class="row justify-content-center my-auto">
+                <div class="col-md-8 col-10 my-2">
+                  <div class="row justify-content-center px-3 mb-3">
+                    <img id="logo" src={`${loginImage}`} />
+                  </div>
+                  <h3 class="text-center heading">We are InnoVenture</h3>
+                  <h6 class="msg-info">Please login to your account</h6>
+
+                  <div class="form-group">
+                    <label class="form-control-label ">Username</label>
+                    <input type="text" id="email" name="email" placeholder="Phone no or email id" class="form-control" onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label">Password</label> 
+                    <input type="password" id="psw" name="psw" placeholder="Password" class="form-control" onChange={(e) => setPassword(e.target.value)} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label ">User Type</label>
+                    <select id="dropdownId" name="dropdownName" onChange={(e) => setLogType(e.target.value)} className="form-select" >
+                      <option  value="startup" selected>
+                        Startup Login
+                      </option>
+                      <option value="investor">Investor Login</option>
+                    </select>
+                  </div>
+
+                  <div class="row justify-content-center my-3 px-3">
+                    <button class="btn-block btn-color"  onClick={handleLogin}>Login to Innoventure</button>
+                  </div>
+
+                </div>
+              </div>
+              <div class="bottom text-center mb-5">
+                <p class="sm-text mx-auto mb-3">Don't have an account?
+                  <Link to="/signup"> <button class="btn btn-white ml-2">Create new</button></Link>
+                </p>
+              </div>
+            </div>
+            <div class="card card2">
+              <div class="my-auto mx-md-5 px-md-5 right">
+                <img src={`${loginVec}`} className="img-fluid" />
+                <h3 class="text-white">We are more than just a company</h3> <small class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+              </div>
+            </div>
+          </div>
         </div>
-        <p>
-          login se phele register karo bhaiya <Link to="/signup"> daba tu</Link>
-        </p>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,170 +1,151 @@
 import React from "react";
 import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
-import img from "../Images/login_image.jpg";
-import img2 from "../Images/investment.jpg";
-import img3 from "../Images/galaxy2.jpg";
+import heroImg from "../Images/hero-img.png";
+import heroBg from "../Images/hero-bg.png";
+import about from "../Images/about.jpg";
+import value1 from "../Images/values-1.png"
+import value2 from "../Images/values-2.png"
+import value3 from "../Images/values-3.png"
 
 const Home = () => {
   return (
-    <div>
-     
-      <div className="home-cont">
-        <img
-          src="https://dubaitechnews.com/wp-content/uploads/2023/12/Startup-Web.jpg"
-          alt=""
-          className="home-img"
-        />
-        <div className="home-info">
-          <h2>Welcome to InnoVenture</h2>
-          <p>
-            Explore innovation, connect with visionary startups, and discover
+    <>
+      <section
+        id="hero"
+        class="hero d-flex align-items-center"
+        style={{ background: `url(${heroBg}) top center no-repeat` }}
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 d-flex flex-column justify-content-center">
+              <h1 data-aos="fade-up">Welcome to InnoVenture</h1>
+              <h2 data-aos="fade-up" data-aos-delay="400">
+                Explore innovation, connect with visionary startups, and discover
             the future with InnoVenture.
-          </p>
-          <p>
-            Whether you're an investor or a startup founder, InnoVenture is your
+              </h2>
+              <div data-aos="fade-up" data-aos-delay="600">
+                <div class="text-center text-lg-start">
+                  <Link
+                    to="/explore"
+                    class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                  >
+                    <span>Get Started</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-6 hero-img"
+              data-aos="zoom-out"
+              data-aos-delay="200"
+            >
+              <img src={`${heroImg}`} class="img-fluid" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section id="about" class="about">
+
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-0">
+
+          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="content">
+              <h3>Who We Are</h3>
+              <h2> Explore innovation, connect with visionary startups, and discover
+            the future with InnoVenture.</h2>
+              <p>
+              Whether you're an investor or a startup founder, InnoVenture is your
             go-to platform for exciting opportunities and the latest trends.
             Join us on this journey of exploration and growth.
-          </p>
-          <Link to="/explore" className="btn btn-dark">
-            Get Started
-          </Link>
-        </div>
-      </div>
-
-      {/* <h3>Out Testimonials</h3>
-      <div className="testimonials-section">
-        
-        <div className="row align-items-center mb-4">
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">Testimonial content...</p>
-                <h5 className="card-title">- Person's Name</h5>
+              </p>
+              <div class="text-center text-lg-start">
+                <Link to="/explore" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+                  <span>Explore</span>
+                  
+                </Link>
               </div>
             </div>
           </div>
-          <div className="col-md-6"></div> 
-        </div>
 
-        
-        <div className="row align-items-center mb-4">
-          <div className="col-md-6"></div> 
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">Testimonial content...</p>
-                <h5 className="card-title">- Person's Name</h5>
-              </div>
-            </div>
+          <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img src={`${about}`} class="img-fluid" alt="" />
           </div>
-        </div>
-      </div> */}
 
-      <div className="cards-container">
-        <div className="home-card">
-          <div className="card">
-            <img
-              src="https://hudsonici.com/wp-content/uploads/2021/11/2.png"
-              className="card-img-top"
-              alt="Explore"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Explore Startups</h5>
-              <p className="card-text">
-                Discover & connect with cutting-edge startups.
-              </p>
-              <Link to="/explore" className="btn btn-dark">
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="home-card">
-          <div className="card">
-            <img src={img2} className="card-img-top" alt="Invest" />
-            <div className="card-body">
-              <h5 className="card-title">Invest</h5>
-              <p className="card-text">
-                Explore and invest in innovative startups.
-              </p>
-              <Link to="/invest" className="btn btn-dark">
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="home-card">
-          <div className="card">
-            <img
-              src="https://blog.cdn.cmarix.com/blog/wp-content/uploads/2020/03/How-to-Develop-a-Multi-Vendor-Ecommerce-Marketplace.jpg"
-              className="card-img-top"
-              alt="Marketplace"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Marketplace</h5>
-              <p className="card-text">
-                Browse and buy products from listed startups.
-              </p>
-              <Link to="/" className="btn btn-dark">
-                Explore Marketplace
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
-      {/* <div className="cards-container">
-        <div className="home-card">
-          <div className="custom-card">
-            <img src={img2} className="card-img-top" alt="Invest" />
-            <div className="card-body">
-              <h5 className="card-title">Invest</h5>
-              <p className="card-text">
-                Explore and invest in innovative startups.
-              </p>
-              <Link to="/invest" className="btn btn-primary">
-                Learn More
-              </Link>
+
+    </section>
+
+
+
+    <section id="values" class="values mt-5">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Our Services</h2>
+          <p>Odit est perspiciatis laborum et dicta</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="box">
+              <img src={`${value1}`} class="img-fluid" alt="" />
+              <h3>Explore Startups</h3>
+              <p>Uncover innovation and potential with a click. Explore a diverse range of groundbreaking startups, fostering inspiration, collaboration, and partnership opportunities to drive entrepreneurial creativity forward.</p>
+              <Link
+                    to="/explore"
+                    class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                  >
+                    <span>Explore</span>
+                  </Link>
             </div>
           </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+            <div class="box">
+              <img src={`${value2}`} class="img-fluid" alt="" />
+              <h3>Invest</h3>
+              <p>Drive the future with strategic investments. Connect with visionary founders, explore tailored opportunities, and contribute to shaping tomorrow's innovations with ease and confidence.</p>
+              <Link
+                    to="/invest"
+                    class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                  >
+                    <span>Invest</span>
+                  </Link>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
+            <div class="box">
+              <img src={`${value3}`} class="img-fluid" alt="" />
+              <h3>Marketplace</h3>
+              <p>Access a vibrant ecosystem of innovation. Discover curated products, services, and investment opportunities from dynamic startups across industries, fostering connections and growth in a thriving entrepreneurial landscape.</p>
+              <Link
+                    to="/"
+                    class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                  >
+                    <span>Explore</span>
+                  </Link>
+            </div>
+          </div>
+
         </div>
 
-        <div className="home-card">
-          <div className="custom-card">
-            <img src={img} className="card-img-top" alt="Explore" />
-            <div className="card-body">
-              <h5 className="card-title">Explore Startups</h5>
-              <p className="card-text">
-                Discover and connect with cutting-edge startups.
-              </p>
-              <Link to="/explore" className="btn btn-primary">
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </div>
+      </div>
 
-        <div className="home-card">
-          <div className="custom-card">
-            <img
-              src="https://blog.cdn.cmarix.com/blog/wp-content/uploads/2020/03/How-to-Develop-a-Multi-Vendor-Ecommerce-Marketplace.jpg"
-              className="card-img-top"
-              alt="Marketplace"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Marketplace</h5>
-              <p className="card-text">
-                Browse and buy products from listed startups.
-              </p>
-              <Link to="/" className="btn btn-primary">
-                Explore Marketplace
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div> */}
-    </div>
+    </section>
+
+
+
+    </>
   );
 };
 

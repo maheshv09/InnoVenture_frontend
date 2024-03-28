@@ -7,6 +7,8 @@ import LoadingPage from './LoadingPage.js'
 
 const Protected_route = ({children}) => {
 const [user,isLoading]=useAuthState(auth);
+//console.log("user : ", user);
+
     try{
         if(isLoading){
             return(

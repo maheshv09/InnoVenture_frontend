@@ -7,14 +7,19 @@ import Marketplace from "../Marketplace/Marketplace";
 import LoadingPage from "../LoadingPage";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
+import { FaBuilding, FaStickyNote, FaRegHandPointUp, FaRupeeSign, FaWeight, FaArrowLeft, FaUser, FaMapMarkedAlt } from "react-icons/fa";
+import { FaHandHoldingDollar } from "react-icons/fa6"
+import { LuBadgePercent } from "react-icons/lu";
+
 import EquityRaising from "../Equity/EquityRaising";
 import "./Startup.css";
 import { UNSAFE_useRouteId } from "react-router-dom";
+import StartupCard from "./StartupCard";
 const Startup = ({ firstTime, userEmail }) => {
 
   const renderChart = () => {
     if (startup && startup.data) {
-      console.log("STARTUP DATA :",startup.data)
+      console.log("STARTUP DATA :", startup.data)
       const parsedData = startup.data.split('\n').map(line => line.split(','));
 
 
@@ -23,25 +28,25 @@ const Startup = ({ firstTime, userEmail }) => {
       const openValues = parsedData.map(entry => parseFloat(entry[1])); // Assuming open is at index 1
       const highValues = parsedData.map(entry => parseFloat(entry[2])); // Assuming high is at index 2
       const lowValues = parsedData.map(entry => parseFloat(entry[3])); // Assuming low is at index 3
-      
-      const closeValues = parsedData.map(entry => parseFloat(entry[4])); // Assuming close is at index 4
-      let data=[];
-      
-      for (let i=0;i<dates.length;i++){
 
-        let obj={}
-        obj["dates"]=dates[i]
-        obj["openValues"]=openValues[i]
-        obj["highValues"]=highValues[i]
-        obj["lowValues"]=lowValues[i]
-        obj["closeValues"]=closeValues[i]
+      const closeValues = parsedData.map(entry => parseFloat(entry[4])); // Assuming close is at index 4
+      let data = [];
+
+      for (let i = 0; i < dates.length; i++) {
+
+        let obj = {}
+        obj["dates"] = dates[i]
+        obj["openValues"] = openValues[i]
+        obj["highValues"] = highValues[i]
+        obj["lowValues"] = lowValues[i]
+        obj["closeValues"] = closeValues[i]
 
         data.push(obj)
       }
-      console.log("DATES :",dates)
-      console.log("Open At :",openValues)
+      console.log("DATES :", dates)
+      console.log("Open At :", openValues)
 
-      console.log("PArsedDATA---->",parsedData)
+      console.log("PArsedDATA---->", parsedData)
       return (
         <LineChart width={800} height={400} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -62,7 +67,7 @@ const Startup = ({ firstTime, userEmail }) => {
 
 
   const user = useAuthState(auth);
-  const [isLoading , setIsLoading ]=useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [usp, setUsp] = useState("");
@@ -72,7 +77,7 @@ const Startup = ({ firstTime, userEmail }) => {
   const [data, setData] = useState(null);
   console.log("user", user);
   const uid = user[0]?.uid;
-  const email=user[0]?.email
+  const email = user[0]?.email
 
   const [findUser, setFindUser] = useState(false);
   const [startup, setStartup] = useState({});
@@ -99,7 +104,7 @@ const Startup = ({ firstTime, userEmail }) => {
         console.log("FINDUSER:", findUser);
         const start = await axios.get(
           `http://localhost:8000/getStartDet/${uid}`
-          
+
         );
         console.log("startup", start.data);
         setIsLoading(false)
@@ -137,7 +142,7 @@ const Startup = ({ firstTime, userEmail }) => {
       formData.append("valuation", updatedProfileData.valuation);
       formData.append("availableEquity", updatedProfileData.availableEquity);
       formData.append("photo", updatedProfileData.photo);
-      
+
       // If a new data file is provided, append it to the FormData
       if (updatedProfileData.data instanceof File) {
         formData.append("data", updatedProfileData.data);
@@ -173,14 +178,14 @@ const Startup = ({ firstTime, userEmail }) => {
       setProfile({ ...profile, [name]: value });
     }
   };
-  const [flag,setFlag]=useState(false)
+  const [flag, setFlag] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData1 = new FormData();
     formData1.set("image", photo);
     //console.log("ZXC", formData);
     setFlag(true)
-   await axios
+    await axios
       .post(
         "https://api.imgbb.com/1/upload?key=e260abee406449ae9e7c159665ef502c",
         formData1
@@ -189,7 +194,7 @@ const Startup = ({ firstTime, userEmail }) => {
         const url = res.data.data.display_url;
         setPhoto(url);
       });
-      setFlag(false)
+    setFlag(false)
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -214,168 +219,136 @@ const Startup = ({ firstTime, userEmail }) => {
       console.error("Error:", error);
     }
   };
-  console.log("----FIND USER--->",findUser)
+  console.log("----FIND USER--->", findUser)
   const [selectedOption, setSelectedOption] = useState("profile");
   console.log("OPTIONNN:", selectedOption);
 
 
-  console.log("isLoading :",isLoading)
+  console.log("isLoading :", isLoading)
 
   return (
     <div>
-      
-      {isLoading  ? ( <LoadingPage/>  ) :
-      (
-        <div>
-      <h1>Startup Profile</h1>
-      <div className="sidebar">
-        <ul typeof="">
-          <li>
-            <a href="#" onClick={() => setSelectedOption("profile")}>
-              View Profile
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={() => setSelectedOption("equity")}>
-              Equity Raising
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={() => setSelectedOption("marketplace")}>
-              Marketplace
-            </a>
-          </li>
-        </ul>
-      </div>
 
-      <div className="content">
-        {selectedOption === "profile" ? (
-          isEditing ? (
-            <StartupForm
-              startup={startup}
-              onSubmit={handleSaveProfile}
-              onCancel={() => setIsEditing(false)}
-            />
-          ) : (
-            <div>
-              {findUser ? (
-                <div className="startup-details">
-                  <div className="image-container">
-                    {startup.photo && (
-                      <img
-                        className="startup-image"
-                        src={startup.photo}
-                        alt="Profile"
-                      />
-                    )}
-                  </div>
-                  <div className="details-container">
-                    <h2 className="startup-name">{startup.name}</h2>
-                    <div className="detail-item">
-                      <p className="detail-label">Description:</p>
-                      <p className="detail-text">{startup.description}</p>
-                    </div>
-                    <div className="detail-item">
-                      <p className="detail-label">USP:</p>
-                      <p className="detail-text">{startup.usp}</p>
-                    </div>
-                    {startup.data && (
-                      <div className="detail-item">
-                        <p className="detail-label">Data:</p>
-                        <pre>{renderChart()}</pre>
-                                              </div>
-                    )}
-                    <div className="detail-item">
-                      <p className="detail-label">Current Valuation:</p>
-                      <p className="detail-text">{startup.valuation}</p>
-                    </div>
-                    <div className="detail-item">
-                      <p className="detail-label">Current Available Equity:</p>
-                      <p className="detail-text">{startup.availableEquity}</p>
-                    </div>
-                  </div>
-                  <button onClick={handleEditProfile}>Edit Profile</button>
+      {isLoading ? (<LoadingPage />) :
+        (
+         
+          <div className="startup">
+             <h2 className="fw-bold my-3">Welcome {startup.name}</h2>
+            <div className="mx-5 profile-options row d-flex justify-content-between">
+              <div class="col-md-3" data-aos="zoom-out" data-aos-delay="200" onClick={() => setSelectedOption("profile")}>
+                <div class="feature-box d-flex align-items-center">
+                  <FaUser />
+                  <h3>Edit Profile</h3>
                 </div>
+              </div>
+
+              <div class="col-md-3" data-aos="zoom-out" data-aos-delay="200" onClick={() => setSelectedOption("equity")}>
+                <div class="feature-box d-flex align-items-center">
+                  <FaHandHoldingDollar />
+                  <h3>Raise Equity</h3>
+                </div>
+              </div>
+
+              <div class="col-md-3" data-aos="zoom-out" data-aos-delay="200" onClick={() => setSelectedOption("marketplace")}>
+                <div class="feature-box d-flex align-items-center">
+                  <FaMapMarkedAlt />
+                  <h3>Marketplace</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="content">
+              {selectedOption === "profile" ? (
+                isEditing ? (
+                  <StartupForm
+                    startup={startup}
+                    onSubmit={handleSaveProfile}
+                    onCancel={() => setIsEditing(false)}
+                  />
+                ) : (
+                  <div>
+                    {findUser ? (
+                      <StartupCard renderChart={renderChart} startup={startup} />
+                    ) : (
+                      <div className="edit-profile">
+                        <form onSubmit={handleSubmit}>
+                          <label>Name</label>
+                          <input
+                            name="name"
+                            value={profile.name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                          <br />
+
+                          <label>Description</label>
+                          <input
+                            name="description"
+                            value={profile.description}
+                            onChange={(e) => setDesc(e.target.value)}
+                          />
+                          <br />
+
+                          <label>Photo</label>
+                          <input
+                            type="file"
+                            name="photo"
+                            ref={fileInputRef}
+                            onChange={(e) => setPhoto(e.target.files[0])}
+                          />
+                          <br />
+
+                          <label>USP</label>
+                          <input
+                            name="USP"
+                            value={profile.USP}
+                            onChange={(e) => setUsp(e.target.value)}
+                          />
+                          <br />
+
+                          <label>Data Upload</label>
+                          <input
+                            type="file"
+                            name="dataUpload"
+                            onChange={(e) => setData(e.target.files[0])}
+                          />
+                          <br />
+                          <label>Current Valuation</label>
+                          <input
+                            type="text"
+                            value={profile.valuation || ""}
+                            onChange={(e) =>
+                              setProfile({ ...profile, valuation: e.target.value })
+                            }
+                          />
+                          <br />
+
+                          <label>Current Available Equity</label>
+                          <input
+                            type="text"
+                            value={profile.availableEquity || ""}
+                            onChange={(e) =>
+                              setProfile({
+                                ...profile,
+                                availableEquity: e.target.value,
+                              })
+                            }
+                          />
+                          <br />
+                          <button type="submit">Save</button>
+                        </form>
+                      </div>
+                    )}
+                  </div>
+                )
+              ) : selectedOption === "equity" ? (
+                <EquityRaising />
               ) : (
-                <div>
-                  <form onSubmit={handleSubmit}>
-                    <label>Name</label>
-                    <input
-                      name="name"
-                      value={profile.name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    <br />
-
-                    <label>Description</label>
-                    <input
-                      name="description"
-                      value={profile.description}
-                      onChange={(e) => setDesc(e.target.value)}
-                    />
-                    <br />
-
-                    <label>Photo</label>
-                    <input
-                      type="file"
-                      name="photo"
-                      ref={fileInputRef}
-                      onChange={(e) => setPhoto(e.target.files[0])}
-                    />
-                    <br />
-
-                    <label>USP</label>
-                    <input
-                      name="USP"
-                      value={profile.USP}
-                      onChange={(e) => setUsp(e.target.value)}
-                    />
-                    <br />
-
-                    <label>Data Upload</label>
-                    <input
-                      type="file"
-                      name="dataUpload"
-                      onChange={(e) => setData(e.target.files[0])}
-                    />
-                    <br />
-                    <label>Current Valuation</label>
-                    <input
-                      type="text"
-                      value={profile.valuation || ""}
-                      onChange={(e) =>
-                        setProfile({ ...profile, valuation: e.target.value })
-                      }
-                    />
-                    <br />
-
-                    <label>Current Available Equity</label>
-                    <input
-                      type="text"
-                      value={profile.availableEquity || ""}
-                      onChange={(e) =>
-                        setProfile({
-                          ...profile,
-                          availableEquity: e.target.value,
-                        })
-                      }
-                    />
-                    <br />
-                    <button type="submit">Save</button>
-                  </form>
-                </div>
+                <Marketplace firebase_Id={uid} />
               )}
             </div>
-          )
-        ) : selectedOption === "equity" ? (
-          <EquityRaising />
-        ) : (
-          <Marketplace firebase_Id={uid} />
-        )}
-      </div>
-      </div>
-    )
-        }
+          </div>
+        )
+      }
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import "./SignUp.css";
+import "./Login.css";
 import auth from "../../firebase_init";
 import axios from "axios"; //used for get-post requests
+import loginImage from "../Images/logo.png"; // Adjust the path as necessary
+import loginVec from "../Images/login_vec.jpg"
 
 const SignUp = ({}) => {
   const [name, setName] = useState("");
@@ -77,67 +79,77 @@ const SignUp = ({}) => {
   };
 
   return (
-    <div className="SignUp">
-      <div className="SignUpBox" style={{ width: "50%", padding: "20px" }}>
-        <h2 style={{ textAlign: "center", color: "#333333" }}>Sign Up</h2>
-        <label>Email</label>
-        <input
-          type="text"
-          placeholder="abc@gmail.com"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
+    <>
+    <div class="container my-auto mx-auto login-signup">
+        <div class="card card0">
+          <div class="d-flex flex-lg-row flex-column-reverse">
+            <div class="card card1 shadow">
+              <div class="row justify-content-center my-auto">
+                <div class="col-md-8 col-10 my-2">
+                  <div class="row justify-content-center px-3 mb-3">
+                    <img id="logo" src={`${loginImage}`} />
+                  </div>
+                  <h3 class="text-center heading">We are InnoVenture</h3>
+                  <h6 class="msg-info">Create Account</h6>
 
-        <label>Name</label>
-        <input
-          type="text"
-          placeholder="Your Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <br />
+                  <div class="form-group">
+                    <label class="form-control-label ">Username</label>
+                    <input type="text" id="name" name="name" placeholder="Username" class="form-control" onChange={(e) => setName(e.target.value)} />
+                  </div>
 
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="Your Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        {/* < div className="gender" >
-           <label >Gender</label>
-          <input className="radioLabel" type="radio" name="Gender" value="Male" id="userGender" onChange={(e) => setGender(e.target.value)} />Male
-          <input className="radioLabel" type="radio" name="Gender" value="Female" id="userGender" onChange={(e) => setGender(e.target.value)} />Female<br/>
-            
-      </div> */}
-        <label>BirthDate</label>
-        <input
-          type="text"
-          name="birthDate"
-          onChange={(e) => setDOB(e.target.value)}
-        />
-        <label>Age</label>
-        <input
-          type="text"
-          placeholder="Your Mobile Number"
-          onChange={(e) => setMobileNum(e.target.value)}
-        />
-        <br />
 
-        <label for="dropdownId">Login Type</label>
-        <select
-          id="dropdownId"
-          name="dropdownName"
-          onChange={(e) => setLogType(e.target.value)}
-        >
-          <option value="startup">Startup Login</option>
-          <option value="investor">Investor Login</option>
-        </select>
-        <br />
-        <button className="submitBut" type="submit" onClick={handleSignUp}>
-          Sign Up
-        </button>
+                  <div class="form-group">
+                    <label class="form-control-label ">Email</label>
+                    <input type="email" id="email" name="email" placeholder="email id" class="form-control" onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label">Password</label> 
+                    <input type="password" id="psw" name="psw" placeholder="Password" class="form-control" onChange={(e) => setPassword(e.target.value)} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label">Birthdate</label> 
+                    <input type="text" id="bd" name="bd" placeholder="Birthdate" class="form-control" onChange={(e) => setDOB(e.target.value)} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label">Contact Number</label> 
+                    <input type="text" id="no" name="no" placeholder="Contact Number" class="form-control" onChange={(e) => setMobileNum(e.target.value)} />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label ">User Type</label>
+                    <select id="dropdownId" name="dropdownName" onChange={(e) => setLogType(e.target.value)} className="form-select" >
+                      <option  value="startup" selected>
+                        Startup Login
+                      </option>
+                      <option value="investor">Investor Login</option>
+                    </select>
+                  </div>
+
+                  <div class="row justify-content-center my-3 px-3">
+                    <button class="btn-block btn-color"  onClick={handleSignUp}>Register to Innoventure</button>
+                  </div>
+
+                </div>
+              </div>
+              <div class="bottom text-center mb-5">
+                <p class="sm-text mx-auto mb-3">Already have an account?
+                  <Link to="/login"> <button class="btn btn-white ml-2">Login</button></Link>
+                </p>
+              </div>
+            </div>
+            <div class="card card2">
+              <div class="my-auto mx-md-5 px-md-5 right">
+                <img src={`${loginVec}`} className="img-fluid" />
+                <h3 class="text-white">We are more than just a company</h3> <small class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

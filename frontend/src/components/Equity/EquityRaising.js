@@ -23,27 +23,35 @@ const EquityRaising = () => {
   };
 
   return (
-    <div>
-      <h3>Equity Raising</h3>
-      <form onSubmit={handleSubmit}>
+    <div className="my-5">
+      <h1 className="fw-bold"> Raise Equity </h1>
+      <form onSubmit={handleSubmit} className="equity">
+        <div className="form-group">
         <label>
           Amount to raise (INR):
-          <input
+          
+        </label>
+        <input
             type="text"
             value={amount}
+            className="form-control"
             onChange={(e) => setAmount(e.target.value)}
           />
-        </label>
         <br />
+        </div>
+        <div className="form-group">
         <label>
           Corresponding Equity Offer:
-          <input
+          
+        </label>
+        <input
             type="text"
             value={equity}
+            className="form-control"
             onChange={(e) => setEquity(e.target.value)}
           />
-        </label>
         <br />
+        </div>
         <button type="submit">Submit</button>
       </form>
     </div>

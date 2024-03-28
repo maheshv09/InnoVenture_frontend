@@ -90,39 +90,44 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Name</label>
-      <input
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
-      <br />
+    <>
+    
+    <h3 className="fw-bold my-5">Fill your Statup details Here</h3>
+    <form onSubmit={handleSubmit} className="edit-profile col-md-8 mx-auto shadow px-5 py-5">
+      <div className="form-group">
+        <label class="form-label">Name</label>
+        <input classname="form-control"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-      <label>Description</label>
-      <input
+
+      <label class="form-label">Description</label>
+      <textarea classname="form-control"
         name="description"
         value={formData.description}
         onChange={handleChange}
         required
-      />
+      ></textarea>
       <br />
 
-      <label>USP</label>
-      <input name="usp" value={formData.usp} onChange={handleChange} required />
+      <label class="form-label">USP</label>
+      <textarea classname="form-control" name="usp" value={formData.usp} onChange={handleChange} required ></textarea>
       <br />
 
-      <label>Current Valuation</label>
-      <input
+      <label class="form-label">Current Valuation</label>
+      <input classname="form-control"
         name="valuation"
         value={formData.valuation}
         onChange={handleChange}
         required
       />
       <br />
-      <label>Current Available Equity</label>
-      <input
+      <label class="form-label">Current Available Equity</label>
+      <input classname="form-control"
         name="availableEquity"
         value={formData.availableEquity}
         onChange={handleChange}
@@ -130,8 +135,8 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
       />
       <br />
 
-      <label>Photo</label>
-      <input
+      <label class="form-label">Photo</label>
+      <input classname="form-control"
         type="file"
         name="photo"
         onChange={handlePhotoUpload}
@@ -139,17 +144,18 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
       />
       <br />
 
-      <label>Data Upload</label>
-      <input type="file" name="data" onChange={handleChange} />
+      <label class="form-label">Data Upload</label>
+      <input classname="form-control" type="file" name="data" onChange={handleChange} />
       <br />
 
-      <button type="submit" onClick={handleSubmit}>
+      <button type="submit" onClick={handleSubmit} className="mx-3">
         Save
       </button>
-      <button type="button" onClick={onCancel}>
+      <button type="button" onClick={onCancel} className="mx-3" >
         Cancel
       </button>
     </form>
+    </>
   );
 };
 
