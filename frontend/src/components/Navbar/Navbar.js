@@ -46,13 +46,11 @@ const Navbar = () => {
                 <Link to="/home" className="nav-link">
                   Home
                 </Link>{" "}
-                {/* Use Link component */}
               </li>
               <li className="nav-item">
                 <Link to="/explore" className="nav-link">
                   Explore
                 </Link>{" "}
-                {/* Use Link component */}
               </li>
               <li className="nav-item">
                 <Link to="/invest" className="nav-link">
@@ -63,9 +61,12 @@ const Navbar = () => {
                 <Link to="/aboutUs" className="nav-link">
                   About Us
                 </Link>{" "}
-                {/* Use Link component */}
               </li>
-
+              <li className="nav-item">
+                <Link to="/cart" className="nav-link">
+                  Cart
+                </Link>{" "}
+              </li>
               {/* <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"

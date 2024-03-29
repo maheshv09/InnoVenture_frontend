@@ -3,8 +3,15 @@ import axios from "axios";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import StartupInfo from "../StartupInfo/StartupInfo";
 import "./Explore.css";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 
 const Home = () => {
   const [startups, setStartups] = useState([]);
@@ -24,14 +31,12 @@ const Home = () => {
     fetchStartups();
   }, []);
 
-  
-
   return (
     <div>
       <h2>Invest into Equities!</h2>
       <div className="page">
         {startups.map((startup, index) => (
-          <Link to={`/startup/${startup.firebase_Id}`} key={index}>
+          <Link to={`/marketPlace/${startup.firebase_Id}`} key={index}>
             {" "}
             {/* Link to detailed page */}
             <div className="card1">

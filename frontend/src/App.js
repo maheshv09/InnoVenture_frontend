@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { useState } from "react";
 import "./App.css";
 import SignUp from "./components/Login/SignUp";
 import Login from "./components/Login/Login";
@@ -13,8 +14,11 @@ import Protected_route from "./components/Protected_route";
 import Startup from "./components/Startup/Startup";
 import StartupInfo from "./components/StartupInfo/StartupInfo";
 import Marketplace from "./components/Marketplace/Marketplace";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import UserMarket from "./components/UserMarket/UserMarket";
+import Cart from "./components/Cart/Cart";
+import Payment from "./components/Payment/Payment";
 
 function Layout({ children }) {
   return (
@@ -23,7 +27,6 @@ function Layout({ children }) {
         <Navbar />
         <ToastContainer />
         <Outlet /> {/* Layout  */}
-
         <Footer />
       </Protected_route>
     </>
@@ -31,6 +34,7 @@ function Layout({ children }) {
 }
 
 function App() {
+  const [selectedProducts, setSelectedProducts] = useState([]);
   return (
     <div className="App">
       <BrowserRouter>
@@ -47,8 +51,26 @@ function App() {
             <Route path="/site1" element={<Site1 />} />
             <Route path="/site2" element={<Site2 />} />
             <Route path="/explore" element={<Explore />} />
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  selectedProducts={selectedProducts}
+                  setSelectedProducts={setSelectedProducts}
+                />
+              }
+            />
             <Route path="/startup/:firebase_Id" element={<StartupInfo />} />
-
+            <Route
+              path="/marketPlace/:firebase_Id"
+              element={
+                <UserMarket
+                  selectedProducts={selectedProducts}
+                  setSelectedProducts={setSelectedProducts}
+                />
+              }
+            />
+            <Route path="/payment/:totAmt" element={<Payment />} />
           </Route>
         </Routes>
       </BrowserRouter>

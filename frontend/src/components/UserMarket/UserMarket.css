@@ -1,0 +1,22 @@
+.product-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(33.33% - 20px); /* Adjust the width as needed */
+  }
+  
+  .product-card h3 {
+    margin-top: 0;
+  }
+  
+  .product-card p {
+    margin-bottom: 0;
+  }
+  
