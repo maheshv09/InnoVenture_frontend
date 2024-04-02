@@ -1,0 +1,51 @@
+/* Profile.css */
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .profile-info {
+    margin-bottom: 20px;
+  }
+  
+  .profile-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .equity-section {
+    margin-top: 20px;
+  }
+  
+  .equity-item {
+    margin-bottom: 10px;
+  }
+  
+  .orders-section {
+    margin-top: 20px;
+  }
+  
+  .orders-item {
+    margin-bottom: 10px;
+  }
+  
+  .orders-item p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  

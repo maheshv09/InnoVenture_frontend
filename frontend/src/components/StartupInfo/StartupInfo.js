@@ -31,30 +31,26 @@ const StartupInfo = () => {
   console.log("FIREBASE ID :", firebase_Id);
   const renderChart = () => {
     if (startup && startup.data) {
+      console.log("STARTUP DATA :", startup.data);
       const parsedData = startup.data.content
         .split("\n")
         .map((line) => line.split(","));
+
       parsedData.shift(); // Remove header row
       const dates = parsedData.map((entry) => entry[0]); // Assuming date is at index 0
-      const openValues = parsedData.map((entry) => parseFloat(entry[1])); // Assuming open is at index 1
-      const highValues = parsedData.map((entry) => parseFloat(entry[2])); // Assuming high is at index 2
-      const lowValues = parsedData.map((entry) => parseFloat(entry[3])); // Assuming low is at index 3
+      const valuationInLakhs = parsedData.map((entry) => parseFloat(entry[1])); // Assuming open is at index 1
 
-      const closeValues = parsedData.map((entry) => parseFloat(entry[4])); // Assuming close is at index 4
       let data = [];
 
       for (let i = 0; i < dates.length; i++) {
         let obj = {};
         obj["dates"] = dates[i];
-        obj["openValues"] = openValues[i];
-        obj["highValues"] = highValues[i];
-        obj["lowValues"] = lowValues[i];
-        obj["closeValues"] = closeValues[i];
+        obj["valuationInLakhs"] = valuationInLakhs[i];
 
         data.push(obj);
       }
-      console.log("DATES :", dates);
-      console.log("Open At :", openValues);
+      // console.log("DATES :", dates);
+      // console.log("Open At :", openValues);
 
       console.log("PArsedDATA---->", parsedData);
       return (
@@ -64,10 +60,7 @@ const StartupInfo = () => {
           <YAxis domain={["auto", "auto"]} tickCount={10} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="openValues" stroke="#8884d8" />
-          <Line type="monotone" dataKey="highValues" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="lowValues" stroke="#ffc658" />
-          <Line type="monotone" dataKey="closeValues" stroke="#ff7300" />
+          <Line type="monotone" dataKey="valuationInLakhs" stroke="#8884d8" />
         </LineChart>
       );
     }

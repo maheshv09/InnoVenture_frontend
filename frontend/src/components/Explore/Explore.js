@@ -74,7 +74,7 @@ const Home = () => {
       </div>
       <div className="page">
         {filteredStartups.map((startup, index) => (
-          <Link to={`/startup/${startup.firebase_Id}`} key={index}>
+          <Link to={`/marketPlace/${startup.firebase_Id}`} key={index}>
             {/* Link to detailed page */}
             <div className="card1">
               <img src={startup.photo} className="card-img-top" alt="Startup" />

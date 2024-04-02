@@ -25,6 +25,7 @@ import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminLogin from "./components/Login/AdminLogin";
 import FileUpload from "./components/FileUpload";
 import QnA from "./components/QnA/QnA";
+import Profile from "./components/Profile/Profile";
 function Layout({ children }) {
   return (
     <>
@@ -54,6 +55,7 @@ function App() {
             </Route>
             <Route path="/home" element={<Home />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/startup" element={<Startup />} />
             <Route path="/invest" element={<Invest />} />
             <Route path="/site1" element={<Site1 />} />
