@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import img from "../Images/login_image.jpg";
 import img2 from "../Images/investment.jpg";
 import img3 from "../Images/galaxy2.jpg";
+import Video from "../VideoConference/Video";
 
 const Home = () => {
   return (
     <div>
-     
       <div className="home-cont">
         <img
           src="https://dubaitechnews.com/wp-content/uploads/2023/12/Startup-Web.jpg"
@@ -21,6 +21,7 @@ const Home = () => {
             Explore innovation, connect with visionary startups, and discover
             the future with InnoVenture.
           </p>
+
           <p>
             Whether you're an investor or a startup founder, InnoVenture is your
             go-to platform for exciting opportunities and the latest trends.

@@ -5,6 +5,7 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
     name: startup.name || "",
     description: startup.description || "",
     usp: startup.usp || "",
+    categories: startup.categories || "",
     valuation: startup.valuation,
     availableEquity: startup.availableEquity,
     photo: startup.photo || null,
@@ -16,10 +17,11 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
     console.log("MAHIIII:", name);
     if (name !== "data") {
       console.log("XYZ:", name);
-      setFormData({ ...formData, [name]: value });
+      if (name == "categories") {
+        var cat = value.split(",");
+        setFormData({ ...formData, [name]: cat });
+      } else setFormData({ ...formData, [name]: value });
     } else {
-      //
-
       if (files.length > 0) {
         const file = files[0];
         setFormData({ ...formData, [name]: file });
@@ -92,12 +94,7 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>Name</label>
-      <input
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
+      <input name="name" value={formData.name} onChange={handleChange} />
       <br />
 
       <label>Description</label>
@@ -105,20 +102,24 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
         name="description"
         value={formData.description}
         onChange={handleChange}
-        required
       />
       <br />
 
       <label>USP</label>
-      <input name="usp" value={formData.usp} onChange={handleChange} required />
+      <input name="usp" value={formData.usp} onChange={handleChange} />
       <br />
-
+      <label>Categories(comma separated)</label>
+      <input
+        name="categories"
+        value={formData.categories}
+        onChange={handleChange}
+      />
+      <br />
       <label>Current Valuation</label>
       <input
         name="valuation"
         value={formData.valuation}
         onChange={handleChange}
-        required
       />
       <br />
       <label>Current Available Equity</label>
@@ -126,7 +127,6 @@ const StartupForm = ({ startup, onSubmit, onCancel }) => {
         name="availableEquity"
         value={formData.availableEquity}
         onChange={handleChange}
-        required
       />
       <br />
 

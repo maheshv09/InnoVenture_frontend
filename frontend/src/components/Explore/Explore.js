@@ -15,6 +15,8 @@ import {
 
 const Home = () => {
   const [startups, setStartups] = useState([]);
+  const [filteredStartups, setFilteredStartups] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchStartups = async () => {
@@ -23,6 +25,7 @@ const Home = () => {
           "http://localhost:8000/getAllStartups"
         );
         setStartups(response.data.data);
+        setFilteredStartups(response.data.data);
       } catch (error) {
         console.error("Error fetching startups:", error);
       }
@@ -31,19 +34,54 @@ const Home = () => {
     fetchStartups();
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setFilteredStartups(startups);
+    } else {
+      const filtered = startups.filter((startup) =>
+        startup.categories.includes(selectedCategory)
+      );
+      setFilteredStartups(filtered);
+    }
+  }, [startups, selectedCategory]);
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div>
-      <h2>Invest into Equities!</h2>
+      <h2>Explore the Listed Startups!</h2>
+      <div>
+        <select
+          value={selectedCategory}
+          onChange={(e) => handleCategoryChange(e.target.value)}
+        >
+          <option value="All" style={{ textAlign: "center" }}>
+            All
+          </option>
+
+          {Array.from(
+            new Set(
+              startups.flatMap((startup) => startup.categories.split(", "))
+            )
+          ).map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="page">
-        {startups.map((startup, index) => (
-          <Link to={`/marketPlace/${startup.firebase_Id}`} key={index}>
-            {" "}
+        {filteredStartups.map((startup, index) => (
+          <Link to={`/startup/${startup.firebase_Id}`} key={index}>
             {/* Link to detailed page */}
             <div className="card1">
               <img src={startup.photo} className="card-img-top" alt="Startup" />
               <div className="card-body">
                 <h5 className="card-title">{startup.name}</h5>
                 <p className="card-text">{startup.description}</p>
+                <p className="card-text">Categories: {startup.categories}</p>
                 <a href="#" className="btn btn-primary">
                   Go {startup.name}
                 </a>

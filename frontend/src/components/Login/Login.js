@@ -18,7 +18,7 @@ import axios from "axios";
 
 const Login = () => {
   const curruser = useAuthState(auth);
-  const id=curruser[0]?.uid
+  const id = curruser[0]?.uid;
   const [logintype, setLogType] = useState("");
 
   const [email, setEmail] = useState("");
@@ -37,16 +37,15 @@ const Login = () => {
     try {
       if (!email.includes("@")) alert("Invalid Email");
       else {
+        const response = await axios.get(
+          `http://localhost:8000/checkLoginType/${email}`
+        );
+        const status = response.data.success;
 
-          const response= await axios.get(`http://localhost:8000/checkLoginType/${email}`)
-          const status =response.data.success;
-
-         
-        
-        if(status && logintype!=='investor'){
+        if (status && logintype !== "investor") {
           await signInWithEmailAndPassword(email, password);
-         navigate("/startup");
-        } else if(!status && logintype==='investor'){
+          navigate("/startup");
+        } else if (!status && logintype === "investor") {
           await signInWithEmailAndPassword(email, password);
           navigate("/");
         }
@@ -57,7 +56,9 @@ const Login = () => {
     //validate and home
     // <Home/>
   };
-
+  const handleAdminLogin = () => {
+    navigate("/admin-login");
+  };
   useEffect(() => {
     console.log(email);
   }, [email]);
@@ -149,6 +150,14 @@ const Login = () => {
             onClick={handleGoogleLogin}
           />
         </div>
+        <button
+          variant="outlined"
+          color="primary"
+          onClick={handleAdminLogin}
+          fullWidth
+        >
+          Admin Portal
+        </button>
         <p>
           login se phele register karo bhaiya <Link to="/signup"> daba tu</Link>
         </p>

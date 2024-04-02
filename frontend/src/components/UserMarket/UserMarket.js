@@ -6,6 +6,7 @@ import auth from "../../firebase_init";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./UserMarket.css";
+
 const UserMarket = ({ selectedProducts, setSelectedProducts }) => {
   const { firebase_Id } = useParams();
   const [startup, setStartup] = useState(null);
@@ -31,10 +32,35 @@ const UserMarket = ({ selectedProducts, setSelectedProducts }) => {
     fetchStartup();
   }, [firebase_Id]); // Added firebase_Id as a dependency to fetch data when it changes
 
-  const handleAddToCart = (productId) => {
+  const handleAddToCart = async (productId) => {
     const productToAdd = products.find((product) => product._id === productId);
     if (productToAdd) {
       setSelectedProducts([...selectedProducts, productToAdd]);
+      var obj = {};
+      const userResp = await axios.get(
+        `http://localhost:8000/getUser/${firebase_Id}`
+      );
+      const userDoc = userResp.data;
+      obj = userDoc.cart;
+      const price = parseFloat(productToAdd.price.replace("rs", ""));
+      if (productToAdd.name in obj) {
+        obj[productToAdd.name].quantity += 1;
+        // obj[productToAdd.name].price =
+        //   parseInt(obj[productToAdd.name].price) + parseInt(price);
+      } else {
+        obj[productToAdd.name] = {
+          quantity: 1,
+          price: price,
+        };
+      }
+      if (obj) {
+        const resp = await axios.patch(
+          `http://localhost:8000/updateUser/${userDoc.firebase_Id}`,
+          {
+            cart: obj,
+          }
+        );
+      }
       toast.success("Product added to cart!");
     }
   };

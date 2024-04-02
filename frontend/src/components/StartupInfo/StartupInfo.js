@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom"; // Import useParams to access URL params
-import "./StartupInfo.css"; // Assuming you have a CSS file for styling
+import "./StartupInfo.css";
+// Assuming you have a CSS file for styling
 import {
   LineChart,
   Line,
@@ -15,6 +16,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase_init";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import QnA from "../QnA/QnA";
+
 const StartupInfo = () => {
   const [startup, setStartup] = useState(null);
   const { firebase_Id } = useParams(); // Get the startup ID from URL params
@@ -92,18 +96,21 @@ const StartupInfo = () => {
 
   const handleBuy = async () => {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/buyEquity/${firebase_Id}`,
-        {
-          reqEquity: reqEquity,
-          amount: reqAmount,
-        }
-      );
       const userResp = await axios.get(
         `http://localhost:8000/getUser/${firebase_Id}`
       );
       const userDoc = userResp.data;
+      const response = await axios.patch(
+        `http://localhost:8000/buyEquity/${firebase_Id}`,
+        {
+          buyer: userDoc.name,
+          buyerMail: userDoc.email,
+          reqEquity: reqEquity,
+          amount: reqAmount,
+        }
+      );
       const obj = userDoc.equity;
+
       console.log("OOOO:", obj);
       if (obj) {
         obj[`${startup.name}`] = {
@@ -154,6 +161,12 @@ const StartupInfo = () => {
           <p>
             <strong>offer_equity:</strong> {startup.offer_equity}
           </p>
+          <Link to="/videoMeet">
+            <button>Video Call</button>
+          </Link>
+          <Link to={`/report/${firebase_Id}`}>
+            <button>Report Startup</button>
+          </Link>
           <label>Enter Amount required :</label>
           <input type="text" onChange={(e) => setReqAmount(e.target.value)} />
           <button onClick={handleBuy}>Check</button>
@@ -166,6 +179,23 @@ const StartupInfo = () => {
             </div>
           )}
           <img src={startup.photo}></img>
+          <div>
+            <h3>List of Investors</h3>
+            <ul>
+              {startup.investment.map((investor, index) => (
+                <li key={index}>
+                  <strong>Investor Name:</strong> {investor.investorName},{" "}
+                  <strong>Investment Amount:</strong>{" "}
+                  {investor.investmentAmount}, <strong>Equity:</strong>{" "}
+                  {investor.equity}, <strong>Valuation:</strong>{" "}
+                  {investor.valuation}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link to={`/qna/${firebase_Id}`}>
+            <button>Go to QnA Page</button>
+          </Link>
         </div>
       ) : (
         <p>Loading123...</p>

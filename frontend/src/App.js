@@ -19,7 +19,12 @@ import "react-toastify/dist/ReactToastify.css";
 import UserMarket from "./components/UserMarket/UserMarket";
 import Cart from "./components/Cart/Cart";
 import Payment from "./components/Payment/Payment";
-
+import Video from "./components/VideoConference/Video";
+import ReportStartupForm from "./components/ReportStartupForm/ReportStartupForm";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import AdminLogin from "./components/Login/AdminLogin";
+import FileUpload from "./components/FileUpload";
+import QnA from "./components/QnA/QnA";
 function Layout({ children }) {
   return (
     <>
@@ -39,18 +44,29 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/file" element={<FileUpload />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Home />}>
               {" "}
             </Route>
             <Route path="/home" element={<Home />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/startup" element={<Startup />} />
             <Route path="/invest" element={<Invest />} />
             <Route path="/site1" element={<Site1 />} />
             <Route path="/site2" element={<Site2 />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/videoMeet" element={<Video />} />
+            <Route path="/qna/:firebaseId" element={<QnA />} />
+            <Route path="/payment/:totAmt" element={<Payment />} />
+            <Route
+              path="/report/:firebase_Id"
+              element={<ReportStartupForm />}
+            />
+
             <Route
               path="/cart"
               element={
@@ -70,7 +86,6 @@ function App() {
                 />
               }
             />
-            <Route path="/payment/:totAmt" element={<Payment />} />
           </Route>
         </Routes>
       </BrowserRouter>

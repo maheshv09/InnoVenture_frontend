@@ -5,48 +5,56 @@ import auth from "../../firebase_init";
 import StartupForm from "./StartupForm";
 import Marketplace from "../Marketplace/Marketplace";
 import LoadingPage from "../LoadingPage";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
+import InvestmentList from "../InvestmentList/InvestmentList";
 
 import EquityRaising from "../Equity/EquityRaising";
 import "./Startup.css";
 import { UNSAFE_useRouteId } from "react-router-dom";
 const Startup = ({ firstTime, userEmail }) => {
-
   const renderChart = () => {
     if (startup && startup.data) {
-      console.log("STARTUP DATA :",startup.data)
-      const parsedData = startup.data.split('\n').map(line => line.split(','));
-
+      console.log("STARTUP DATA :", startup.data);
+      const parsedData = startup.data
+        .split("\n")
+        .map((line) => line.split(","));
 
       parsedData.shift(); // Remove header row
-      const dates = parsedData.map(entry => entry[0]); // Assuming date is at index 0
-      const openValues = parsedData.map(entry => parseFloat(entry[1])); // Assuming open is at index 1
-      const highValues = parsedData.map(entry => parseFloat(entry[2])); // Assuming high is at index 2
-      const lowValues = parsedData.map(entry => parseFloat(entry[3])); // Assuming low is at index 3
-      
-      const closeValues = parsedData.map(entry => parseFloat(entry[4])); // Assuming close is at index 4
-      let data=[];
-      
-      for (let i=0;i<dates.length;i++){
+      const dates = parsedData.map((entry) => entry[0]); // Assuming date is at index 0
+      const openValues = parsedData.map((entry) => parseFloat(entry[1])); // Assuming open is at index 1
+      const highValues = parsedData.map((entry) => parseFloat(entry[2])); // Assuming high is at index 2
+      const lowValues = parsedData.map((entry) => parseFloat(entry[3])); // Assuming low is at index 3
 
-        let obj={}
-        obj["dates"]=dates[i]
-        obj["openValues"]=openValues[i]
-        obj["highValues"]=highValues[i]
-        obj["lowValues"]=lowValues[i]
-        obj["closeValues"]=closeValues[i]
+      const closeValues = parsedData.map((entry) => parseFloat(entry[4])); // Assuming close is at index 4
+      let data = [];
 
-        data.push(obj)
+      for (let i = 0; i < dates.length; i++) {
+        let obj = {};
+        obj["dates"] = dates[i];
+        obj["openValues"] = openValues[i];
+        obj["highValues"] = highValues[i];
+        obj["lowValues"] = lowValues[i];
+        obj["closeValues"] = closeValues[i];
+
+        data.push(obj);
       }
-      console.log("DATES :",dates)
-      console.log("Open At :",openValues)
+      console.log("DATES :", dates);
+      console.log("Open At :", openValues);
 
-      console.log("PArsedDATA---->",parsedData)
+      console.log("PArsedDATA---->", parsedData);
       return (
         <LineChart width={800} height={400} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="dates" />
-          <YAxis domain={['auto', 'auto']} tickCount={10} />
+          <YAxis domain={["auto", "auto"]} tickCount={10} />
           <Tooltip />
           <Legend />
           <Line type="monotone" dataKey="openValues" stroke="#8884d8" />
@@ -59,20 +67,19 @@ const Startup = ({ firstTime, userEmail }) => {
     return null;
   };
 
-
-
   const user = useAuthState(auth);
-  const [isLoading , setIsLoading ]=useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [usp, setUsp] = useState("");
+  const [categories, setCategories] = useState("");
   const [valuation, setValuation] = useState("");
   const [availableEquity, setAvailableEquity] = useState("");
   const [photo, setPhoto] = useState(null);
   const [data, setData] = useState(null);
   console.log("user", user);
   const uid = user[0]?.uid;
-  const email=user[0]?.email
+  const email = user[0]?.email;
 
   const [findUser, setFindUser] = useState(false);
   const [startup, setStartup] = useState({});
@@ -83,7 +90,7 @@ const Startup = ({ firstTime, userEmail }) => {
   }, []);
   const fetchEmail = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       console.log("HELOOOOO");
       const response = await axios.get(
         `http://localhost:8000/isStartupPresent/${uid}`
@@ -92,17 +99,15 @@ const Startup = ({ firstTime, userEmail }) => {
       console.log("Response:", response.data.message);
       if (response.data.message === "Not Found") {
         setFindUser(false);
-        setIsLoading(false)
-
+        setIsLoading(false);
       } else {
         setFindUser(true);
         console.log("FINDUSER:", findUser);
         const start = await axios.get(
           `http://localhost:8000/getStartDet/${uid}`
-          
         );
         console.log("startup", start.data);
-        setIsLoading(false)
+        setIsLoading(false);
 
         // Decode base64-encoded photo content
         // const photoContent = atob(start.data.photo.content);
@@ -134,10 +139,11 @@ const Startup = ({ firstTime, userEmail }) => {
       formData.append("email", email);
       formData.append("description", updatedProfileData.description);
       formData.append("usp", updatedProfileData.usp);
+      formData.append("categories", updatedProfileData.categories);
       formData.append("valuation", updatedProfileData.valuation);
       formData.append("availableEquity", updatedProfileData.availableEquity);
       formData.append("photo", updatedProfileData.photo);
-      
+
       // If a new data file is provided, append it to the FormData
       if (updatedProfileData.data instanceof File) {
         formData.append("data", updatedProfileData.data);
@@ -173,14 +179,14 @@ const Startup = ({ firstTime, userEmail }) => {
       setProfile({ ...profile, [name]: value });
     }
   };
-  const [flag,setFlag]=useState(false)
+  const [flag, setFlag] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData1 = new FormData();
     formData1.set("image", photo);
     //console.log("ZXC", formData);
-    setFlag(true)
-   await axios
+    setFlag(true);
+    await axios
       .post(
         "https://api.imgbb.com/1/upload?key=e260abee406449ae9e7c159665ef502c",
         formData1
@@ -189,12 +195,15 @@ const Startup = ({ firstTime, userEmail }) => {
         const url = res.data.data.display_url;
         setPhoto(url);
       });
-      setFlag(false)
+    setFlag(false);
+    var cat = categories.split(",");
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
     formData.append("description", desc);
     formData.append("usp", usp);
+    formData.append("categories", cat);
     formData.append("photo", photo);
     formData.append("data", data);
     formData.append("valuation", valuation);
@@ -214,168 +223,192 @@ const Startup = ({ firstTime, userEmail }) => {
       console.error("Error:", error);
     }
   };
-  console.log("----FIND USER--->",findUser)
+  console.log("----FIND USER--->", findUser);
   const [selectedOption, setSelectedOption] = useState("profile");
   console.log("OPTIONNN:", selectedOption);
 
-
-  console.log("isLoading :",isLoading)
+  console.log("isLoading :", isLoading);
 
   return (
     <div>
-      
-      {isLoading  ? ( <LoadingPage/>  ) :
-      (
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
         <div>
-      <h1>Startup Profile</h1>
-      <div className="sidebar">
-        <ul typeof="">
-          <li>
-            <a href="#" onClick={() => setSelectedOption("profile")}>
-              View Profile
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={() => setSelectedOption("equity")}>
-              Equity Raising
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={() => setSelectedOption("marketplace")}>
-              Marketplace
-            </a>
-          </li>
-        </ul>
-      </div>
+          <h1>Startup Profile</h1>
+          <div className="sidebar">
+            <ul typeof="">
+              <li>
+                <a href="#" onClick={() => setSelectedOption("profile")}>
+                  View Profile
+                </a>
+              </li>
+              <li>
+                <a href="#" onClick={() => setSelectedOption("equity")}>
+                  Equity Raising
+                </a>
+              </li>
+              <li>
+                <a href="#" onClick={() => setSelectedOption("marketplace")}>
+                  Marketplace
+                </a>
+              </li>
+              <li>
+                <a href="#" onClick={() => setSelectedOption("investments")}>
+                  Investment Details
+                </a>
+              </li>
+            </ul>
+          </div>
 
-      <div className="content">
-        {selectedOption === "profile" ? (
-          isEditing ? (
-            <StartupForm
-              startup={startup}
-              onSubmit={handleSaveProfile}
-              onCancel={() => setIsEditing(false)}
-            />
-          ) : (
-            <div>
-              {findUser ? (
-                <div className="startup-details">
-                  <div className="image-container">
-                    {startup.photo && (
-                      <img
-                        className="startup-image"
-                        src={startup.photo}
-                        alt="Profile"
-                      />
-                    )}
-                  </div>
-                  <div className="details-container">
-                    <h2 className="startup-name">{startup.name}</h2>
-                    <div className="detail-item">
-                      <p className="detail-label">Description:</p>
-                      <p className="detail-text">{startup.description}</p>
-                    </div>
-                    <div className="detail-item">
-                      <p className="detail-label">USP:</p>
-                      <p className="detail-text">{startup.usp}</p>
-                    </div>
-                    {startup.data && (
-                      <div className="detail-item">
-                        <p className="detail-label">Data:</p>
-                        <pre>{renderChart()}</pre>
-                                              </div>
-                    )}
-                    <div className="detail-item">
-                      <p className="detail-label">Current Valuation:</p>
-                      <p className="detail-text">{startup.valuation}</p>
-                    </div>
-                    <div className="detail-item">
-                      <p className="detail-label">Current Available Equity:</p>
-                      <p className="detail-text">{startup.availableEquity}</p>
-                    </div>
-                  </div>
-                  <button onClick={handleEditProfile}>Edit Profile</button>
-                </div>
+          <div className="content">
+            {selectedOption === "profile" ? (
+              isEditing ? (
+                <StartupForm
+                  startup={startup}
+                  onSubmit={handleSaveProfile}
+                  onCancel={() => setIsEditing(false)}
+                />
               ) : (
                 <div>
-                  <form onSubmit={handleSubmit}>
-                    <label>Name</label>
-                    <input
-                      name="name"
-                      value={profile.name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    <br />
+                  {findUser ? (
+                    <div className="startup-details">
+                      <div className="image-container">
+                        {startup.photo && (
+                          <img
+                            className="startup-image"
+                            src={startup.photo}
+                            alt="Profile"
+                          />
+                        )}
+                      </div>
+                      <div className="details-container">
+                        <h2 className="startup-name">{startup.name}</h2>
+                        <div className="detail-item">
+                          <p className="detail-label">Description:</p>
+                          <p className="detail-text">{startup.description}</p>
+                        </div>
+                        <div className="detail-item">
+                          <p className="detail-label">USP:</p>
+                          <p className="detail-text">{startup.usp}</p>
+                        </div>
+                        <div className="detail-item">
+                          <p className="detail-label">categories:</p>
+                          <p className="detail-text">{startup.categories}</p>
+                        </div>
+                        {startup.data && (
+                          <div className="detail-item">
+                            <p className="detail-label">Data:</p>
+                            <pre>{renderChart()}</pre>
+                          </div>
+                        )}
+                        <div className="detail-item">
+                          <p className="detail-label">Current Valuation:</p>
+                          <p className="detail-text">{startup.valuation}</p>
+                        </div>
+                        <div className="detail-item">
+                          <p className="detail-label">
+                            Current Available Equity:
+                          </p>
+                          <p className="detail-text">
+                            {startup.availableEquity}
+                          </p>
+                        </div>
+                      </div>
+                      <button onClick={handleEditProfile}>Edit Profile</button>
+                    </div>
+                  ) : (
+                    <div>
+                      <form onSubmit={handleSubmit}>
+                        <label>Name</label>
+                        <input
+                          name="name"
+                          value={profile.name}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                        <br />
 
-                    <label>Description</label>
-                    <input
-                      name="description"
-                      value={profile.description}
-                      onChange={(e) => setDesc(e.target.value)}
-                    />
-                    <br />
+                        <label>Description</label>
+                        <input
+                          name="description"
+                          value={profile.description}
+                          onChange={(e) => setDesc(e.target.value)}
+                        />
+                        <br />
 
-                    <label>Photo</label>
-                    <input
-                      type="file"
-                      name="photo"
-                      ref={fileInputRef}
-                      onChange={(e) => setPhoto(e.target.files[0])}
-                    />
-                    <br />
+                        <label>Photo</label>
+                        <input
+                          type="file"
+                          name="photo"
+                          ref={fileInputRef}
+                          onChange={(e) => setPhoto(e.target.files[0])}
+                        />
+                        <br />
 
-                    <label>USP</label>
-                    <input
-                      name="USP"
-                      value={profile.USP}
-                      onChange={(e) => setUsp(e.target.value)}
-                    />
-                    <br />
+                        <label>USP</label>
+                        <input
+                          name="USP"
+                          value={profile.USP}
+                          onChange={(e) => setUsp(e.target.value)}
+                        />
+                        <br />
+                        <label>Categories (comma separated)</label>
+                        <input
+                          name="categories"
+                          value={profile.categories}
+                          onChange={(e) => setCategories(e.target.value)}
+                        />
+                        <br />
+                        <label>Data Upload</label>
+                        <input
+                          type="file"
+                          name="dataUpload"
+                          onChange={(e) => setData(e.target.files[0])}
+                        />
+                        <br />
+                        <label>Current Valuation</label>
+                        <input
+                          type="text"
+                          value={profile.valuation || ""}
+                          onChange={(e) =>
+                            setProfile({
+                              ...profile,
+                              valuation: e.target.value,
+                            })
+                          }
+                        />
+                        <br />
 
-                    <label>Data Upload</label>
-                    <input
-                      type="file"
-                      name="dataUpload"
-                      onChange={(e) => setData(e.target.files[0])}
-                    />
-                    <br />
-                    <label>Current Valuation</label>
-                    <input
-                      type="text"
-                      value={profile.valuation || ""}
-                      onChange={(e) =>
-                        setProfile({ ...profile, valuation: e.target.value })
-                      }
-                    />
-                    <br />
-
-                    <label>Current Available Equity</label>
-                    <input
-                      type="text"
-                      value={profile.availableEquity || ""}
-                      onChange={(e) =>
-                        setProfile({
-                          ...profile,
-                          availableEquity: e.target.value,
-                        })
-                      }
-                    />
-                    <br />
-                    <button type="submit">Save</button>
-                  </form>
+                        <label>Current Available Equity</label>
+                        <input
+                          type="text"
+                          value={profile.availableEquity || ""}
+                          onChange={(e) =>
+                            setProfile({
+                              ...profile,
+                              availableEquity: e.target.value,
+                            })
+                          }
+                        />
+                        <br />
+                        <button type="submit">Save</button>
+                      </form>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          )
-        ) : selectedOption === "equity" ? (
-          <EquityRaising />
-        ) : (
-          <Marketplace firebase_Id={uid} />
-        )}
-      </div>
-      </div>
-    )
-        }
+              )
+            ) : selectedOption === "equity" ? (
+              <EquityRaising />
+            ) : selectedOption === "equity" ? (
+              <Marketplace firebase_Id={uid} />
+            ) : (
+              <>
+                <InvestmentList firebase_Id={uid} />
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
