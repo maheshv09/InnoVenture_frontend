@@ -40,12 +40,13 @@ const InvestmentList = ({ firebase_Id }) => {
       valuation,
       equity,
     };
-
+    var inv = prevInvestments;
+    inv.push(newInvestment);
     // Send new investment data to backend
     try {
       const response = await axios.patch(
         `http://localhost:8000/addInvestments/${firebase_Id}`,
-        { investment: [newInvestment] } // Sending only the new investment
+        { investment: inv } // Sending only the new investment
       );
       console.log("Response:", response);
 

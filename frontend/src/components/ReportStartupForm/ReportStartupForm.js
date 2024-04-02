@@ -11,7 +11,7 @@ const ReportStartupForm = () => {
   const [startName, setStartupName] = useState("");
   const { firebase_Id } = useParams();
   const user = useAuthState(auth);
-  //console.log("USERRR:", user);
+  console.log("USERRR:", user);
   const navigate = useNavigate();
   const getDet = async () => {
     const resp = await axios.get(
@@ -20,8 +20,10 @@ const ReportStartupForm = () => {
     const resp1 = await axios.get(
       `http://localhost:8000/getUser/${user[0].uid}`
     );
+    console.log("USERDATA:__", resp1.data);
     const userDet = resp1.data;
     setUserName(userDet.name);
+    console.log("MKV", userDet.name);
     const startup = resp.data;
     setStartupName(startup.name);
   };

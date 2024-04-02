@@ -103,7 +103,7 @@ const Profile = () => {
           <p>Product: {product}</p>
           <p>Price: {orders[product].price}</p>
           <p>Quantity: {orders[product].quantity}</p>
-          {orders[product].review !== "0" ? (
+          {orders[product].review != "0" ? (
             <p>You gave {orders[product].review} rating</p>
           ) : (
             <div>

@@ -390,7 +390,7 @@ const Startup = ({ firstTime, userEmail }) => {
               )
             ) : selectedOption === "equity" ? (
               <EquityRaising />
-            ) : selectedOption === "equity" ? (
+            ) : selectedOption === "marketplace" ? (
               <Marketplace firebase_Id={uid} />
             ) : (
               <>
