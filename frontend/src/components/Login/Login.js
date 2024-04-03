@@ -34,6 +34,10 @@ const Login = () => {
     await signInWithGoogle();
   };
 
+  const handleAdminLogin = () => {
+    navigate("/admin-login");
+  };
+
   const handleLogin = async () => {
     try {
       if (!email.includes("@")) alert("Invalid Email");
@@ -104,6 +108,11 @@ const Login = () => {
                   <div class="row justify-content-center my-3 px-3">
                     <button class="btn-block btn-color"  onClick={handleLogin}>Login to Innoventure</button>
                   </div>
+
+                  <div class="row justify-content-center my-1 px-3">
+                    <button class="btn-block btn-color"onClick={handleAdminLogin}>Admin Login</button>
+                  </div>
+
 
                 </div>
               </div>

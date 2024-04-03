@@ -40,8 +40,19 @@ const Navbar = () => {
                       <Link class="nav-link" to="/explore">Explore Startups</Link>
                     </li>
                     <li class="nav-item">
-                      <Link class="nav-link mx-2" to="/invest">MarketPlace</Link>
+                      <Link class="nav-link mx-1" to="/invest">Invest</Link>
                     </li>
+                    <li class="nav-item">
+                      <Link class="nav-link mx-1" to="/aboutUs">About Us</Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link class="nav-link mx-1" to="/cart">Cart</Link>
+                    </li>
+                    <li class="nav-item">
+                      <Link class="nav-link mx-1" to="/profile">Profile</Link>
+                    </li>
+                    
+
                   </>
                   :
                   ""
@@ -49,7 +60,7 @@ const Navbar = () => {
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item logout">
-                <button class="mx-2  btn " onClick={handleLogOut}>Log Out</button>
+                <button class="mx-1  btn " onClick={handleLogOut}>Log Out</button>
               </li>
             </ul>
           </div>
