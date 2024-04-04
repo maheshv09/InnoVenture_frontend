@@ -1,11 +1,19 @@
-
-import { FaBuilding, FaStickyNote, FaRegHandPointUp, FaRupeeSign, FaWeight, FaArrowLeft } from "react-icons/fa";
-import { FaHandHoldingDollar } from "react-icons/fa6"
+import {
+  FaBuilding,
+  FaStickyNote,
+  FaRegHandPointUp,
+  FaRupeeSign,
+  FaWeight,
+  FaArrowLeft,
+} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaHandHoldingDollar } from "react-icons/fa6";
 import { MdOutlineWarning, MdVideoCall } from "react-icons/md";
 import { LuBadgePercent } from "react-icons/lu";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom"; // Import useParams to access URL params
+import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import "./StartupInfo.css";
 // Assuming you have a CSS file for styling
 import {
@@ -30,7 +38,7 @@ const StartupInfo = () => {
   const [reqEquity, setReqEquity] = useState(0);
   const [reqAmount, setReqAmount] = useState(0);
   const [allDone, setAllDone] = useState(false);
-
+  const navigate = useNavigate();
   const user = useAuthState(auth);
   const uid = user[0]?.uid;
   //console.log("FIREBASE ID :", firebase_Id);
@@ -87,9 +95,6 @@ const StartupInfo = () => {
         );
 
         setStartup(response.data);
-
-
-
       } catch (error) {
         console.error("Error fetching startup:", error);
       }
@@ -97,6 +102,10 @@ const StartupInfo = () => {
 
     fetchStartup();
   }, [firebase_Id]); // Fetch startup details whenever ID changes
+
+  const navigateToPayment = () => {
+    navigate(`/payment/${reqAmount}`);
+  };
 
   const handleBuy = async () => {
     try {
@@ -138,7 +147,8 @@ const StartupInfo = () => {
         }
       );
       setAllDone(true);
-      toast.success("Paise udgaye!!");
+      navigateToPayment();
+      //toast.success("Paise udgaye!!");
       console.log("MyResponse :", response.data);
       console.log("MyResponse2 :", response2.data);
       setStartup(response.data);
@@ -152,11 +162,9 @@ const StartupInfo = () => {
       {startup ? (
         <section id="startup-info" class="startup-info">
           <div class="px-5" data-aos="fade-up">
-
             <h2 className="fw-bold my-4">{startup.name}</h2>
 
             <div class="row">
-
               <div class="col-lg-5 d-flex align-items-stretch">
                 <div class="info">
                   <div class="card1">
@@ -208,91 +216,90 @@ const StartupInfo = () => {
                   <div className="row">
                     <div class="card1 col">
                       <MdVideoCall />
-                      <Link to='/videoMeet'>
+                      <Link to="/videoMeet">
                         <button>Video Call</button>
                       </Link>
                     </div>
 
                     <div class="card1 col">
                       <MdOutlineWarning />
-                      <Link to={`/report/${firebase_Id}`} >
+                      <Link to={`/report/${firebase_Id}`}>
                         <button>Report Startup</button>
                       </Link>
                     </div>
                   </div>
-
                 </div>
-
               </div>
 
               <div class="col-lg-7 mt-5 mt-lg-0">
                 <div className="chart">
                   <h4 className="fw-bold mb-3">Sales Data</h4>
-                  {
-                    startup.data && (
-                      <div className="data">
-                        <pre>
-                          {renderChart()}
-                        </pre>
-                      </div>
-                    )
-                  }
-
+                  {startup.data && (
+                    <div className="data">
+                      <pre>{renderChart()}</pre>
+                    </div>
+                  )}
 
                   <div class="form-group ">
                     <h5 className="fw-bold ">Buy Equity</h5>
-                    <input onChange={(e) => setReqAmount(e.target.value)} class="form-control" name="equity" type='number' placeholder="Enter Amount Required" required></input>
+                    <input
+                      onChange={(e) => setReqAmount(e.target.value)}
+                      class="form-control"
+                      name="equity"
+                      type="number"
+                      placeholder="Enter Amount Required"
+                      required
+                    ></input>
                   </div>
-                  <div class="text-center mt-3"><button type="submit" onClick={reqAmount != 0 ? handleBuy : ''}>Buy Equity</button></div>
-
-
-
+                  <div class="text-center mt-3">
+                    <button
+                      type="submit"
+                      onClick={reqAmount != 0 ? handleBuy : ""}
+                    >
+                      Buy Equity
+                    </button>
+                  </div>
                 </div>
               </div>
-
             </div>
-
           </div>
-
+          <VideoPlayer />
           <div className="container startup-info">
             <h2 className="fw-bold my-5">List of Investors</h2>
             <div className="row">
-
-
-              {startup.investment && startup.investment.map((investor, index) => (
-                <div className="col-md-4 " key={index}>
-                  <div class="info investment">
-                    <FaBuilding />
-                    <h4>Name : <span>{investor.investorName}</span> </h4>
-                    <h4>Amount : <span> $ {investor.investmentAmount}</span> </h4>
-                    <h4>Equity : <span> $ {investor.equity}</span> </h4>
-                    <h4>Valuation : <span> $ {investor.valuation}</span> </h4>
+              {startup.investment &&
+                startup.investment.map((investor, index) => (
+                  <div className="col-md-4 " key={index}>
+                    <div class="info investment">
+                      <FaBuilding />
+                      <h4>
+                        Name : <span>{investor.investorName}</span>{" "}
+                      </h4>
+                      <h4>
+                        Amount : <span> $ {investor.investmentAmount}</span>{" "}
+                      </h4>
+                      <h4>
+                        Equity : <span> $ {investor.equity}</span>{" "}
+                      </h4>
+                      <h4>
+                        Valuation : <span> $ {investor.valuation}</span>{" "}
+                      </h4>
+                    </div>
                   </div>
-                </div>
-              ))}
-
-
+                ))}
             </div>
 
-          <div className="d-flex justify-content-center mt-5">
-          <Link to={`/qna/${firebase_Id}`}>
-            <button className="qna">Go to QnA Page</button>
-          </Link>
+            <div className="d-flex justify-content-center mt-5">
+              <Link to={`/qna/${firebase_Id}`}>
+                <button className="qna">Go to QnA Page</button>
+              </Link>
+            </div>
           </div>
-
-          </div>
-
         </section>
       ) : (
         <p>Loading123...</p>
-      )
-      }
-
-
-
-    </div >
-
-
+      )}
+    </div>
   );
 };
 

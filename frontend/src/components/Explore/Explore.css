@@ -52,6 +52,9 @@
   font-weight: 500;
   color: #444444;
 }
+.startup .member .cat{
+  color: #444444;
+}
 
 .startup .member span::after {
   content: "";
@@ -68,6 +71,9 @@
   margin: 10px 0 0 0;
   font-size: 14px;
   color: #000;
+}
+.member strong{
+  color: #37517e;
 }
 
 .startup .member .social {

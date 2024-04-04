@@ -149,7 +149,7 @@ const InvestmentList = ({ firebase_Id }) => {
               {newInvestments.map((investment, index) => (
                 <div class="feature-box text-left mt-2" key={index}>
                   <p><strong>Investor Name:</strong> {investment.buyer}</p>
-                  <p><strong>Investment Amount:</strong> {investment.buyerMail}</p>
+                  <p><strong>Investment Mail:</strong> {investment.buyerMail}</p>
                   <p><strong>Valuation:</strong> {investment.buyerAmount}</p>
                   <p><strong>Equity:</strong> {investment.buyerEquity}</p>
                 </div>

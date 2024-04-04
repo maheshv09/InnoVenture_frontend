@@ -55,7 +55,7 @@ const Home = () => {
           </div>
 
           <div className="d-flex justify-content-end ">
-            <select 
+            <select
               value={selectedCategory}
               onChange={(e) => handleCategoryChange(e.target.value)}
               className="select"
@@ -86,7 +86,9 @@ const Home = () => {
                     <div class="pic col-md-4 my-auto"><img src={startup.photo} class="img-fluid" alt="" /></div>
                     <div class="member-info col-md-6">
                       <h4>{startup.name}</h4>
-                      <span>Founder Name</span>
+                      <p className="cat"><strong>Category :</strong> {startup.categories}</p>
+                      <span><strong>Founder Name :</strong> {startup.founder} </span>
+
                       <p>{startup.description}</p>
                       <div class="social">
                         <a href=""><FaTwitter /></a>

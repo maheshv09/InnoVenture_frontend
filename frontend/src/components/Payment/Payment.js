@@ -38,7 +38,7 @@ const Payment = () => {
       }
     );
 
-    toast.success("Payment Successful!! Order placed!");
+    toast.success("Payment Successful!! ");
     navigate("/");
   };
 
