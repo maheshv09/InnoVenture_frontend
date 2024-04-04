@@ -23,6 +23,7 @@ const Marketplace = ({ firebase_Id }) => {
       }
     };
     fetchProducts();
+    //console.log(products);
   }, [firebase_Id]);
 
   const handleAddProduct = async (e) => {
@@ -103,6 +104,7 @@ const Marketplace = ({ firebase_Id }) => {
       });
       setProducts(updatedProducts);
       setEditingProductId("");
+      
 
     } catch (error) {
       console.error("Error updating product:", error);
@@ -169,7 +171,9 @@ const Marketplace = ({ firebase_Id }) => {
       <div className="products mt-5 container">
         <h2 className="fw-bold ">Products</h2>
         <div className="row">
+
           {products.map((product) => (
+            
             <div key={product._id} className="card col-md-3 border-0 rounded-0 shadow m-2 p-0">
               {editingProductId === product._id ? (
                 <div className="product-form edit p-3">

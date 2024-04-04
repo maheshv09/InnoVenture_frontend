@@ -105,11 +105,11 @@ const Login = () => {
                     </select>
                   </div>
 
-                  <div class="row justify-content-center my-3 px-3">
+                  <div class="row justify-content-center mt-3 px-3">
                     <button class="btn-block btn-color"  onClick={handleLogin}>Login to Innoventure</button>
                   </div>
 
-                  <div class="row justify-content-center my-1 px-3">
+                  <div class="row justify-content-center  px-3">
                     <button class="btn-block btn-color"onClick={handleAdminLogin}>Admin Login</button>
                   </div>
 

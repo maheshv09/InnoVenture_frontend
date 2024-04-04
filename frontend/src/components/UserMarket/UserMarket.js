@@ -1,4 +1,4 @@
-import { FaStar } from "react-icons/fa";
+import { FaDollarSign, FaStar } from "react-icons/fa";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -182,12 +182,16 @@ const UserMarket = ({ selectedProducts, setSelectedProducts }) => {
                   </div>
                 </div>
                 <div class="row align-items-center text-center g-0">
-                  <div class="col-4">
+                  <div class="col-3">
                     <h5>
-                      <FaStar/> {getAggregate(product.ratings)}</h5>
+                      <FaDollarSign/> {product.price}</h5>
                   </div>
-                  <div class="col-8">
+                  <div class="col-6">
                     <button class="btn  btn-primary w-100 p-3 rounded-0" onClick={() => handleAddToCart(product._id)}>Add To Cart</button>
+                  </div>
+                  <div class="col-3">
+                    <h5>
+                      <FaStar/> {getAggregate(product.ratings)} </h5>
                   </div>
                 </div>
                 </div>
