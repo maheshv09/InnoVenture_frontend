@@ -46,7 +46,7 @@ const Payment = () => {
     <div className="paymentPage">
       <h2 className="cart-title">Payment</h2>
       <div className="paymentDetails shadow my-5 col-md-4 mx-auto p-5">
-        <h3><span className="text-danger">Total Amount:</span> $ {totAmt} </h3>
+        <h3><span className="text-danger">Total Amount:</span> Rs. {totAmt} </h3>
 
         <div className="form-group payment">
           <label></label>

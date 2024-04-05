@@ -16,14 +16,10 @@ const Footer = () => {
               <h5 class="text-uppercase mb-4">About company</h5>
 
               <p>
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                voluptatum deleniti atque corrupti.
+              At InnoVenture, we're passionate about innovation, connection, and the relentless pursuit of the future. Our platform is more than just a digital space—it's a dynamic ecosystem where visionaries, startups, and enthusiasts converge to explore, collaborate, and drive progress.
               </p>
 
-              <p>
-                Blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas
-                molestias.
-              </p>
+
 
               <div class="mt-4">
 

@@ -49,6 +49,7 @@ const InvestmentList = ({ firebase_Id }) => {
         { investment: inv } // Sending only the new investment
       );
       console.log("Response:", response);
+      
 
       // Update new investments state to include the new investment
       setNewInvestments([...newInvestments, newInvestment]);
@@ -58,6 +59,7 @@ const InvestmentList = ({ firebase_Id }) => {
       setInvestmentAmount("");
       setValuation("");
       setEquity("");
+      
     } catch (error) {
       console.error("Error adding investment:", error);
     }

@@ -276,7 +276,7 @@ const StartupInfo = () => {
                         Name : <span>{investor.investorName}</span>{" "}
                       </h4>
                       <h4>
-                        Amount : <span> $ {investor.investmentAmount}</span>{" "}
+                        Amount : <span> Rs. {investor.investmentAmount}</span>{" "}
                       </h4>
                       <h4>
                         Equity : <span> $ {investor.equity}</span>{" "}

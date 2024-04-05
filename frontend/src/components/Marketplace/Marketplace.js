@@ -51,6 +51,7 @@ const Marketplace = ({ firebase_Id }) => {
 
       console.log("Product added:", response.data);
       
+      window.location.reload();
       setProducts([...products, response.data.data.ops[0]]);
       setProductName("");
       setProductDescription("");
@@ -231,7 +232,7 @@ const Marketplace = ({ firebase_Id }) => {
                   </div>
                   <div class="row align-items-center text-center g-0">
                     <div class="col-4">
-                      <h5>${product.price}</h5>
+                      <h5>Rs. {product.price}</h5>
                     </div>
                     <div class="col-8">
                       <button class="btn  btn-primary w-100 p-3 rounded-0" onClick={() => setEditingProductId(product._id)}>Edit</button>

@@ -121,7 +121,7 @@ const Cart = () => {
 
                 </div>
                 <div>
-                  <h5 class="text-grey">${selectedProducts[productName].price}</h5>
+                  <h5 class="text-grey">Rs.{selectedProducts[productName].price}</h5>
                 </div>
                 <div class="d-flex align-items-center">
                   <button

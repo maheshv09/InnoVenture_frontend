@@ -33,6 +33,7 @@ const Invest = () => {
     };
 
     fetchStartups();
+    //console.log("startup"+JSON.stringify(startups));
   }, []);
 
   useEffect(() => {
@@ -60,29 +61,29 @@ const Invest = () => {
   };
 
   const getAvgGrowth = async (currStartup) => {
-    console.log("DATAAA:", currStartup);
+    //console.log("DATAAA:", currStartup);
     const response = await axios.get(
       `http://localhost:8000/getStartDet/${currStartup.firebase_Id}` // Assuming you have an endpoint to fetch details of a single startup by ID
     );
     const userDet = response.data;
     const data1 = userDet.data.content;
     const data = parseCSV(data1);
-    console.log("DATA:", data);
+    //console.log("DATA:", data);
     let sumSlope = 0;
     for (let i = 1; i < data.length; i++) {
       const currentDate = new Date(data[i].date).getTime();
       const prevDate = new Date(data[i - 1].date).getTime();
       const currentValuation = data[i].valuation;
       const prevValuation = data[i - 1].valuation;
-      console.log("DATESS:-", currentDate)
+      //console.log("DATESS:-", currentDate)
       const timeDiff = (currentDate - prevDate) / (1000 * 3600 * 24 * 365); // Time difference in years
-      console.log("DATEDIFF:-", timeDiff)
+      //console.log("DATEDIFF:-", timeDiff)
       const slope = (currentValuation - prevValuation) / timeDiff;
-      console.log("slope:-", slope);
+      //console.log("slope:-", slope);
       if (slope)
         sumSlope += slope;
     }
-    console.log("slope:", sumSlope);
+    //console.log("slope:", sumSlope);
     const avgSlope = sumSlope / (data.length - 1);
     console.log("Average Growth:", avgSlope.toFixed(2));
     const response2 = await axios.patch(
@@ -91,14 +92,20 @@ const Invest = () => {
         avgGrowth: avgSlope,
       }
     );
-
+    return avgSlope;
   };
-  const sortStartups = (type) => {
+  const sortStartups = async (type) => {
     let sortedStartups = [...startups]; // Create a copy of the products array
-
+    console.log("initial" + sortedStartups);
     switch (type) {
       case 0:
-        sortedStartups.sort((a, b) => getAvgGrowth(b) - getAvgGrowth(a)); // Sort by review (rating)
+        // Use Promise.all to wait for all async operations to complete
+        await Promise.all(sortedStartups.map(async (startup) => {
+          startup.avgGrowth = await getAvgGrowth(startup); // Calculate and store avgGrowth
+        }));
+
+        // Sort by avgGrowth
+        sortedStartups.sort((a, b) => b.avgGrowth - a.avgGrowth);
         break;
 
       default:
@@ -106,6 +113,7 @@ const Invest = () => {
     }
 
     setStartups(sortedStartups); // Update state with the sorted array
+    console.log("sorted" + JSON.stringify(sortedStartups));
   };
 
   return (
@@ -155,9 +163,9 @@ const Invest = () => {
                     <h4>{startup.name}</h4>
                     <p className="fw-bold "><strong>Category :</strong> {startup.categories}</p>
                     <span><strong>Founder Name :</strong> {startup.founder} </span>
-                    
+
                     <p>{startup.description}</p>
-                    
+
 
                   </div>
                 </div>

@@ -90,7 +90,7 @@ const Home = () => {
 
         <header class="section-header">
           <h2>Our Services</h2>
-          <p>Odit est perspiciatis laborum et dicta</p>
+          <p> Services we offfer to investors </p>
         </header>
 
         <div class="row">
