@@ -16,7 +16,7 @@ app.use(cors()); //use cors
 
 app.use(express.json());
 
-const uri = `mongodb://localhost:27017/`;
+const uri = `mongodb+srv://shanbhagabhay964:user123@cluster0.xt26dbm.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(
   uri,
 
@@ -85,6 +85,7 @@ async function run() {
     const startupCollection = client.db("InnoVenture").collection("StartupDB");
     const productCollection = client.db("InnoVenture").collection("MarketDB");
     const reportCollection = client.db("InnoVenture").collection("ReportsDB");
+    console.log(startupCollection)
     app.post("/postUser", async (req, res) => {
       const user = req.body;
       const result = await userCollection.insertOne(user);
